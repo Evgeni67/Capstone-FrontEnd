@@ -15,6 +15,7 @@ import React, { Component } from "react";
 import MyNavbar from "./components/navbar";
 import Home from "./components/home";
 import Login from "./components/login";
+import Register from "./components/register";
 import MyFooter from "./components/footer";
 
 class App extends Component {
@@ -30,6 +31,9 @@ class App extends Component {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <MyFooter />
         </Router>

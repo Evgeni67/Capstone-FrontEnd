@@ -1,0 +1,85 @@
+.loginContainer{
+    margin-top: 80px;
+    width:300px;
+    height:380px;
+    border:1px solid lightgray;
+    border-radius: 5px;
+    background-color:whitesmoke;
+}
+.loginRegisterContainer{
+    margin-top: 28px;
+    width:300px;
+    height:80px;
+    border:1px solid lightgray;
+    border-radius: 5px;
+    background-color:whitesmoke;
+  margin-bottom: 110px;
+}
+.logoRow{
+    font-size:25px;
+    font-weight: 500;
+    color:black;
+    border-bottom: lightgray 1px solid;
+    padding-bottom: 20px;
+}
+.emailLogin{
+    -webkit-appearance: none !important;
+    margin-top: 30px;
+    border-color:lightgray!important;
+    width:230px;
+    text-align: center;
+    color:gray;
+    color:gray;
+    border-radius: 5px;
+}
+.passwordLogin{
+    -webkit-appearance: none !important;
+    margin-top: 20px;
+    border-color:lightgray!important;
+    width:230px;
+    text-align: center;
+    color:gray;
+    border-radius: 5px;
+}
+.loginBtn{
+    width:130px;
+    color:white;
+    font-weight: 500;
+    background-color: white;
+    border:1px solid white !important;
+    background-color: gray;
+    border-radius: 10px;
+}
+.loginGoogleRow{
+    margin-top: 23px !important;
+}
+.loginBtnRow{
+    border-bottom: 1px solid lightgray !important;
+    padding-bottom: 30px;
+}
+.googleIcon{
+    font-size: 23px;
+    margin-right: 5px;
+}
+.forgottenPassText{
+    font-size:14px;
+}
+.googleText{
+    font-weight: 500;
+}
+.loginRegisterText
+{
+font-weight: 500;
+margin-left: 5px;
+}
+.loginRegisterRow{
+margin-top: 25px;
+}
+.registerQ{
+    font-size:13.5px
+}
+.registerLogin{
+    font-size:13.5px;
+    font-weight: 500;
+    margin-left: 5px;
+}
