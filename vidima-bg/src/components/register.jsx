@@ -45,22 +45,19 @@ class Register extends Component {
         email: this.state.email,
         password: this.state.password,
         address: this.state.address,
-        phoneNumber: this.state.phoneNumber
+        phoneNumber: this.state.phoneNumber,
       },
     };
-    if(this.state.password === this.state.confirmPassowrd){
+    if (this.state.password === this.state.confirmPassowrd) {
       const res = await axios(url + "/profile/register", requestOptions);
       if (res.status === 200) {
-        window.alert("registered")
+        window.alert("registered");
       } else {
         console.log(res);
       }
-    }else{
-      window.alert("Password does not match")
+    } else {
+      window.alert("Password does not match");
     }
-   
-
-  
   };
   render() {
     return (
@@ -101,7 +98,9 @@ class Register extends Component {
             </Col>
             <Col sm={2}>
               <Row className="d-flex justify-content-center">
-                <button className="regBtn" onClick = {() => this.register()}>Register</button>
+                <button className="regBtn" onClick={() => this.register()}>
+                  Register
+                </button>
               </Row>
             </Col>
             <Col sm={5}>
@@ -125,7 +124,7 @@ class Register extends Component {
               <Row className="registerToLogin d-flex justify-content-center">
                 <p className="registerQ">Already have an account?</p>
                 <Link to="/login">
-                  <p className="registerLogin" > Login</p>
+                  <p className="registerLogin"> Login</p>
                 </Link>
               </Row>
             </Col>
