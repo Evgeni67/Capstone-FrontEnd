@@ -17,7 +17,7 @@ import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
 import MyFooter from "./components/footer";
-
+import Catalog from "./components/catalog";
 class App extends Component {
   render() {
     return (
@@ -34,6 +34,9 @@ class App extends Component {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/catalog">
+            <Catalog />
           </Route>
           <MyFooter />
         </Router>

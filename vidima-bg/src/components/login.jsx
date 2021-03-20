@@ -42,6 +42,7 @@ class Login extends Component {
       localStorage.setItem('accessToken', res.data.accessToken);
   localStorage.setItem('refreshToken', res.data.refreshToken);
       window.alert("logged");
+      window.location = "/catalog"
     } else {
       console.log(res);
     }
