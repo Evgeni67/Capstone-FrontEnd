@@ -11,6 +11,7 @@ import {
   Container,
 } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./styles/navbar.css"
 class MyNavbar extends Component {
     render(){
@@ -34,7 +35,11 @@ class MyNavbar extends Component {
   <h className="navText">Любими </h>
 </Col>
 <Col className="d-flex justify-content-center" sm={1}>
+
+<Link className="navText" to = "/shoppingCart">
   <h className="navText">Кошница </h>
+  </Link>
+
 </Col>
 <Col className="d-flex justify-content-center" sm={3}>
   <BsSearch className="searchForm mr-3" />

@@ -9,7 +9,7 @@
   }
   .navText{
     color:gray;
-    margin-top: 35px;
+    margin-top: 35px !important;
     font-size:22px
   }
   .searchForm{
