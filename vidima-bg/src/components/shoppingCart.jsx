@@ -46,12 +46,13 @@ class ShoppingCart extends Component {
     const res = await axios(url + "/profile/me", requestOptions);
     if (res.status === 200) {
       this.setState({ shoppingList: res.data.productsInTheBasket });
-      var price= 0.0
-      res.data.productsInTheBasket.map((item) =>
-        price+=parseFloat(item.price.slice(0, item.price.length - 3))
+      var price = 0.0;
+      res.data.productsInTheBasket.map(
+        (item) =>
+          (price += parseFloat(item.price.slice(0, item.price.length - 3)))
       );
-      price = price.toFixed(2)
-      this.setState({totalPrice:price})
+      price = price.toFixed(2);
+      this.setState({ totalPrice: price });
     } else {
       console.log("Error ->", res);
     }
@@ -88,6 +89,23 @@ class ShoppingCart extends Component {
             </Container>
           </>
         ))}{" "}
+        <Container className="productCol checkOutCol">
+              {" "}
+              {" "}
+              <Row className="text d-flex justify-content-center">
+                {" "}
+                Покупки: {this.state.totalPrice}лв.
+              </Row>
+              <Row className="text d-flex justify-content-center"> Доставка: 10лв.</Row>
+              <Row className="text d-flex justify-content-center">
+                {" "}
+                <strong>Общо: {parseFloat(this.state.totalPrice) +10}лв.</strong>
+              </Row>
+              <Row>
+                <button className="chekoutBtn">Chekout </button>
+              </Row>{" "}
+        </Container>
+        <Row className="checkoutRow d-flex justify-content-center mb-5 mt-5"></Row>
       </>
     );
   }

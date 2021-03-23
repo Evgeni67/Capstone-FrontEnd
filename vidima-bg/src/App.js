@@ -36,7 +36,7 @@ class App extends Component {
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/catalog">
+          <Route exact path="/catalog">
             <Catalog />
           </Route>
           <Route path="/shoppingCart">

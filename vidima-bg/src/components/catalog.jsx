@@ -83,6 +83,7 @@ class Catalog extends Component {
                   </Col>
                 </>
               ))}{" "}
+    
             </Row>
           </>
         ))}
