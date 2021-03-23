@@ -1,0 +1,22 @@
+.productCol {
+  width: 100%;
+  height: 200px;
+}
+.productImg {
+  height: 190px;
+}
+.itemHeading {
+  font-weight: 500;
+}
+.descriptionRow {
+  margin-top: 30px;
+}
+@media screen and (max-width: 600px) {
+  .productCol {
+    height: 400px;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+}

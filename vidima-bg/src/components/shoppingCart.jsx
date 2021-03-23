@@ -11,11 +11,12 @@ import {
 } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
-import "./styles/catalog.css";
+import "./styles/shoppingCart.css";
 import { RiShoppingBasket2Fill } from "react-icons/ri";
 class ShoppingCart extends Component {
   state = {
-    myProducts: [],
+    shoppingList: [],
+    totalPrice: 0,
   };
   removeFromBasket = async (item) => {
     const url = process.env.REACT_APP_URL;
@@ -23,39 +24,70 @@ class ShoppingCart extends Component {
       method: "get",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " +   localStorage.getItem('accessToken'),
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     };
     const res = await axios(url + "/profile/me", requestOptions);
     if (res.status === 200) {
-   this.setState({myProducts:res.data.productsInTheBasket});
-   console.log(res.data.productsInTheBasket)
+      this.setState({ myProducts: res.data.productsInTheBasket });
+      console.log(res.data.productsInTheBasket);
       window.alert("item added succesfully");
     } else {
-      console.log(res);
     }
   };
   componentDidMount = async () => {
-      console.log(localStorage.getItem('accessToken'))
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "GET",
-      Authorization: "Bearer " +   localStorage.getItem('accessToken'),
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
     };
-    const res = await axios(
-      url + "/profile/me",
-      requestOptions
-    );
+    const res = await axios(url + "/profile/me", requestOptions);
     if (res.status === 200) {
-       console.log(res)
+      this.setState({ shoppingList: res.data.productsInTheBasket });
+      var price= 0.0
+      res.data.productsInTheBasket.map((item) =>
+        price+=parseFloat(item.price.slice(0, item.price.length - 3))
+      );
+      price = price.toFixed(2)
+      this.setState({totalPrice:price})
     } else {
-      console.log(res);
+      console.log("Error ->", res);
     }
   };
   render() {
     return (
       <>
-       12333333333333333333333333333333333333333
+        {this.state.shoppingList.map((item) => (
+          <>
+            <Container className="productCol ">
+              <Row>
+                <Col className="center " sm={4}>
+                  {" "}
+                  <img src={item.image} className="productImg" />{" "}
+                </Col>
+
+                <Col>
+                  {" "}
+                  <Row className="center">
+                    <h className="itemHeading">{item.heading} </h>
+                  </Row>
+                  <Row className="descriptionRow">
+                    <h className="">Описание </h>
+                  </Row>
+                  <Row className="">
+                    <h className="itemDescription">{item.description} </h>
+                  </Row>
+                  <Row className="d-flex justify-content-right price">
+                    {" "}
+                    Цена <strong>: {item.price}</strong>{" "}
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
+          </>
+        ))}{" "}
       </>
     );
   }
