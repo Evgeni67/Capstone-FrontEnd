@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   Navbar,
   Nav,
@@ -9,10 +10,48 @@ import {
   Col,
   Container,
 } from "react-bootstrap";
+import { connect } from "react-redux";
 import "./styles/home.css";
-class MyNavbar extends Component {
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  addDataToGlobal: (description, location) =>
+    dispatch(async (dispatch, getState) => {
+      const url = process.env.REACT_APP_URL;
+      const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      };
+      const res = await axios(
+        url + "/categoryForBathroom/zaBanq",
+        requestOptions
+      );
+      if (res.status === 200) {
+        console.log("Got 200 response");
+        dispatch({
+          type: "ADD_FETCHED_PRODUCTS",
+          payload: res.data.categories,
+        });
+      } else {
+        console.log(res);
+      }
+    }),
+  startLoading: () =>
+    dispatch({
+      type: "START_LOADING",
+    }),
+  stopLoading: () =>
+    dispatch({
+      type: "STOP_LOADING",
+    }),
+});
+
+class Home extends Component {
   state = {
     showMiniMarket: false,
+  };
+  componentDidMount = async () => {
+    //loading the data here so we do not have to wait at the catalog component
+    this.props.addDataToGlobal()
   };
   showMiniMarket = () => {
     if (this.state.showMiniMarket) {
@@ -50,7 +89,7 @@ class MyNavbar extends Component {
               this.state.showMiniMarket ? "miniMarket" : "closedMiniMarket"
             }
           >
-            <Row className={this.state.showMiniMarket ? "mt-5":"d-none"}>
+            <Row className={this.state.showMiniMarket ? "mt-5" : "d-none"}>
               <Col sm={8}>
                 <Row className="ml-1">
                   <img
@@ -81,12 +120,13 @@ class MyNavbar extends Component {
                 />
               </Col>
             </Row>
-            <Row className = "codeBEIGE d-flex justify-content-center mt-5"><h5>Use code BEIGE for 20%</h5></Row>
+            <Row className="codeBEIGE d-flex justify-content-center mt-5">
+              <h5>Use code BEIGE for 20%</h5>
+            </Row>
           </Container>
         </Row>
       </>
     );
   }
 }
-
-export default MyNavbar;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
