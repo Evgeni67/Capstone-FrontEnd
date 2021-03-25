@@ -1,4 +1,4 @@
-.productCol {
+.productCol1 {
   border: 1px solid lightgray;
   margin-left: 10px;
   margin-top: 10px;
@@ -7,10 +7,14 @@
   background-color: #f9f9f9;
   border-radius: 2px;
 }
+.categoryNavbar{
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  }
 .heading {
   font-size: 50px;
 }
-.productCol:hover .basket {
+.productCol1:hover .basket {
   visibility: visible;
   font-size: 29px;
 }

@@ -29,7 +29,10 @@ class MyNavbar extends Component {
   <h className="navText"> Идеи</h>
 </Col>
 <Col className="d-flex justify-content-center" sm={1}>
+<Link className="navText" to = "/catalog">
   <h className="navText">Каталог </h>
+  </Link>
+
 </Col>
 <Col className="d-flex justify-content-center" sm={1}>
   <h className="navText">Любими </h>
