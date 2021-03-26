@@ -16,14 +16,14 @@ import { RiShoppingBasket2Fill } from "react-icons/ri";
 import { scroller } from "react-scroll";
 
 var uniqid = require("uniqid");
-
 class Catalog extends Component {
   state = {
     categories: [],
     loading: true,
+    regexCyrillic :/^[\u0400-\u04FF]+$/
   };
-  scrollToSection = () => {
-    scroller.scrollTo("ДЪРЖАЧ ЗА ТОАЛЕТНА ХАРТИЯ (22)", {
+  scrollToSection = (category) => {
+    scroller.scrollTo(category.category_name, {
       duration: 800,
       delay: 0,
       smooth: "easeInOutQuart",
@@ -69,20 +69,23 @@ class Catalog extends Component {
   render() {
     return (
       <>
-      <Container className = "categoryNavbar">
-     {this.state.categories.sort(function(a, b){
-  // ASC  -> a.length - b.length
-  // DESC -> b.length - a.length
-  return a.category_name.length - b.category_name.length;
-}).map((x) => (
-       <>
-                <Row className= "navigationHeading ml-5 mb-5 mt-5">
-                  {x.category_name}{" "}
+        <Container className="categoryNavbar">
+          {this.state.categories
+            .sort(function (a, b) {
+              // ASC  -> a.length - b.length
+              // DESC -> b.length - a.length
+              return a.category_name.length - b.category_name.length;
+            })
+            .map((x) => (
+              <>
+                <Row className="navigationHeading ml-5 mb-5 mt-5">
+                <h onClick={() => this.scrollToSection(x)}>   {x.category_name}{" "} </h>
+                
                 </Row>{" "}
-                </>
-     ))}
-           </Container>
-        <button onClick={() => this.scrollToSection()}> 11111111111111 </button>
+              </>
+            ))}
+        </Container>
+   
 
         <Row
           className={
@@ -93,9 +96,10 @@ class Catalog extends Component {
         </Row>
         {this.state.categories.map((x) => (
           <>
-            <Row>
-              <Col sm={12} className="d-flex justify-content-center">
-                <h className={x.category_name + " heading mb-5 mt-5"}>
+            <Row> <Row className = "lineRow"/>
+              <Col sm={12} className="categoryCol d-flex justify-content-center">
+         
+                <h className={x.category_name + " heading mb-5 "}>
                   {x.category_name}{" "}
                 </h>{" "}
               </Col>{" "}
@@ -110,12 +114,12 @@ class Catalog extends Component {
                     s={6}
                     className="d-flex justify-content-center"
                   >
-                    <Container className="productCol1">
+                    <Container className="productCol1  shadow-lg p-3 mb-5 bg-white rounded">
                       <Row className="d-flex justify-content-center">
                         <img src={item.image} className="productImg" />
                       </Row>
                       <Row className="productHeading d-flex justify-content-center">
-                        <h className={item.heading}>{item.heading} </h>
+                        <h className={item.heading}>{item.heading.slice(0,22)} </h>
                       </Row>
                       <Row className="price d-flex justify-content-center mt-2">
                         {item.price}

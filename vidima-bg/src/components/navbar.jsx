@@ -1,19 +1,25 @@
+
 import "bootstrap/dist/css/bootstrap.css";
 import React, { Component } from "react";
 import {
-  Navbar,
-  Nav,
-  FormControl,
-  Button,
-  Form,
   Row,
   Col,
   Container,
 } from "react-bootstrap";
+import { scroller } from "react-scroll";
+import { connect } from "react-redux";
 import { BsSearch } from "react-icons/bs";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./styles/navbar.css"
+const mapStateToProps = (state) => state;
 class MyNavbar extends Component {
+  scrollToSection = (category) => {
+    scroller.scrollTo(category.category_name, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+    });
+  };
     render(){
   return (
     <>
@@ -48,6 +54,7 @@ class MyNavbar extends Component {
   <BsSearch className="searchForm mr-3" />
   <input className="searchForm" type="text" id="fname" name="fname" />
 </Col>
+
 </Row>
 </>
   
@@ -55,4 +62,4 @@ class MyNavbar extends Component {
 }
 }
 
-export default MyNavbar;
+export default connect(mapStateToProps)(MyNavbar);
