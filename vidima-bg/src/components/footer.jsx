@@ -18,7 +18,7 @@ class MyFooter extends Component {
   render() {
     return (
       <>
-          <Row>
+          <Row className = "footer">
               <Col sm={1} className = "alignCol"/>
             <Col sm={3} s={0} className="leftColFooter">
               <Row className="footerText privacyPolicyRow d-flex justify-content-center">

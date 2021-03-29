@@ -9,8 +9,8 @@
   border-radius: 5px;
 transition:ease-in-out 0.4s
 }
-.productCol1:hover{
- 
+.products{
+  min-height: 800px;
 }
 .categoryNavbar {
   border: 1px solid lightgray;
@@ -19,7 +19,6 @@ transition:ease-in-out 0.4s
 
 .categoryCol {
   background: linear-gradient(180deg, rgba(211,211,211,1) 0%, rgba(255,255,255,1) 76%) !important;
-  margin-bottom: 100px;
   margin-top: 100px;
   font-family: "Kiwi Maru", serif;
 }

@@ -13,6 +13,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./styles/navbar.css"
 const mapStateToProps = (state) => state;
 class MyNavbar extends Component {
+  state = {
+    showingCategories:false
+  }
   scrollToSection = (category) => {
     scroller.scrollTo(category.category_name, {
       duration: 800,
@@ -20,6 +23,13 @@ class MyNavbar extends Component {
       smooth: "easeInOutQuart",
     });
   };
+  showCategories = () => {
+    if(this.state.showingCategories === true) {
+      this.setState({showingCategories:false})
+    }else{
+      this.setState({showingCategories:true})
+    }
+  }
     render(){
   return (
     <>
@@ -52,7 +62,23 @@ class MyNavbar extends Component {
 </Col>
 <Col className="d-flex justify-content-center" sm={3}>
   <BsSearch className="searchForm mr-3" />
-  <input className="searchForm" type="text" id="fname" name="fname" />
+  <input className="searchForm" type="text" id="fname" name="fname" onClick = {() => this.showCategories()}/>
+  <Container className={this.state.showingCategories ? "categoryNavbar" : "d-none"}>
+          {this.props.products.allProducts
+            .sort(function (a, b) {
+              // ASC  -> a.length - b.length
+              // DESC -> b.length - a.length
+              return a.category_name.length - b.category_name.length;
+            })
+            .map((x) => (
+              <>
+                <Row className="navigationHeading d-flex justify-content-center mt-4 mb-4">
+                <h onClick={() => this.scrollToSection(x)}>   {x.category_name}{" "} </h>
+                
+                </Row>{" "}
+              </>
+            ))}
+        </Container>
 </Col>
 
 </Row>

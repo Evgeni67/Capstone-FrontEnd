@@ -69,27 +69,12 @@ class Catalog extends Component {
   render() {
     return (
       <>
-        <Container className="categoryNavbar">
-          {this.state.categories
-            .sort(function (a, b) {
-              // ASC  -> a.length - b.length
-              // DESC -> b.length - a.length
-              return a.category_name.length - b.category_name.length;
-            })
-            .map((x) => (
-              <>
-                <Row className="navigationHeading ml-5 mb-5 mt-5">
-                <h onClick={() => this.scrollToSection(x)}>   {x.category_name}{" "} </h>
-                
-                </Row>{" "}
-              </>
-            ))}
-        </Container>
+       
    
 
         <Row
           className={
-            this.state.loading ? "d-flex justify-content-center" : "d-none"
+            this.state.loading ? "d-flex justify-content-center mt-5" : "d-none"
           }
         >
           <img src="https://studio.code.org/v3/assets/hDNGCz0MfJ-xlRq6yeKqI69d0m9QDG8RRIM23pMHlBk/loading-bar-1.gif" />{" "}
@@ -105,7 +90,7 @@ class Catalog extends Component {
               </Col>{" "}
             </Row>
 
-            <Row className="d-flex justify-content-center">
+            <Row className="products d-flex justify-content-center">
               {x.products.map((item) => (
                 <>
                   <Col

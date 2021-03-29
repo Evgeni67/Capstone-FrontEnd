@@ -15,10 +15,25 @@
   );
 }
 .closedMiniMarket {
-  transition: ease-in-out 1s;
+ 
+  height: 564px;
   width: 0px;
-  visibility: hidden;
-  margin-bottom: 100px;
+  position: absolute;
+  right: 0;
+  background: rgb(251, 248, 240);
+  transition: ease-in-out 1s;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 248, 240, 1) 0%,
+    rgba(229, 214, 199, 1) 8%,
+    rgba(229, 214, 199, 1) 21%,
+    rgba(193, 167, 147, 1) 52%,
+    rgba(197, 179, 160, 1) 90%
+  );
+ 
+}
+.codeBEIGE2{
+    display: none
 }
 .bathroomRow2{
     margin-top: 100px;

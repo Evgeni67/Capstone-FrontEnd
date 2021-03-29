@@ -64,7 +64,7 @@ class Home extends Component {
     return (
       <>
         {" "}
-        <Row className="bathroomRow d-flex justify-content-right">
+        <Row className="bathroomRow d-flex justify-content-right mb-5">
           <Col sm={4}></Col>
           <Col sm={8} className="colTry d-flex justify-content-right">
             <h5 className="headingText">
@@ -76,7 +76,7 @@ class Home extends Component {
             />
           </Col>
         </Row>
-        <Row>
+        <Row className = "mt-5">
           <Col sm={12}>
             <img
               className="bathroomImage2"
@@ -120,7 +120,7 @@ class Home extends Component {
                 />
               </Col>
             </Row>
-            <Row className="codeBEIGE d-flex justify-content-center mt-5">
+            <Row className= {this.state.showMiniMarket?"codeBEIGE d-flex justify-content-center mt-5" : "d-none"}>
               <h5>Use code BEIGE for 20%</h5>
             </Row>
           </Container>
