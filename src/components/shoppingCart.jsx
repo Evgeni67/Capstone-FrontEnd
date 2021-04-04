@@ -32,6 +32,37 @@ class ShoppingCart extends Component {
     price = price.toFixed(2);
     this.setState({ totalPrice: price });
   };
+  sendOrder = async () => {
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      data:{ products: this.state.shoppingList,
+        address: "",
+        phoneNumber: "",
+        status: "",}
+    };
+    const res = await axios(url + "/order/addOrder", requestOptions);
+    console.log(res)
+    this.removeAllFromCart()
+  }
+  removeAllFromCart = async () => {
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      }
+    };
+    const res = await axios(url + "/profile/removeAllFromCart", requestOptions);
+    this.setState({ shoppingList: [] });
+    this.setState({ totalPrice: 0 });
+    console.log(res)
+  }
   componentDidMount = async () => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
@@ -139,7 +170,7 @@ class ShoppingCart extends Component {
             <strong>Общо: {parseFloat(this.state.totalPrice) + 10}лв.</strong>
           </Row>
           <Row>
-            <button className="chekoutBtn">Chekout </button>
+            <button className="chekoutBtn" onClick = {() => this.sendOrder()}>Chekout </button>
           </Row>{" "}
         </Container>
         <Row className="checkoutRow d-flex justify-content-center mb-5 mt-5"></Row>

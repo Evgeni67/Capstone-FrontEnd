@@ -36,7 +36,7 @@ class MyNavbar extends Component {
       {" "}
 <Row>
 <Col className="d-flex justify-content-center" sm={4} xs ={12}>
-  <h className="logoText">L.O.G.O. </h>
+  <h className="logoText" >L.O.G.O. </h>
 </Col>
 <Col className="d-flex justify-content-center" sm={1} xs ={12}>
   <h className="navText">За нас </h>
