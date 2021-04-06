@@ -8,44 +8,65 @@ import {
   Row,
   Col,
   Container,
-  Modal
+  Modal,
 } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
 import "./styles/catalog.css";
 import { RiShoppingBasket2Fill } from "react-icons/ri";
 import { scroller } from "react-scroll";
-import {GrBasket } from "react-icons/gr";
-import {BsSearch } from "react-icons/bs";
-import {connect } from "react-redux";
+import { GrBasket } from "react-icons/gr";
+import { BsSearch } from "react-icons/bs";
+import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 var uniqid = require("uniqid");
 class Catalog extends Component {
   state = {
     categories: [],
     loading: true,
-    showingCategories:false,
-    regexCyrillic :/^[\u0400-\u04FF]+$/,//for later
-    show:false,
+    showingCategories: false,
+    regexCyrillic: /^[\u0400-\u04FF]+$/, //for later
+    show: false,
     imgToInspect: "",
+    loaded: false,
+    currentItem: "",
+    showComments: false,
+    comment:"",
+    addingComment:false,
   };
-  showCategories = () => {
-    if(this.state.showingCategories === true) {
-      this.setState({showingCategories:false})
-    }else{
-      this.setState({showingCategories:true})
+  addComment = async() => {
+    this.setState({addingComment:true})
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json"
+      },
+      data:this.state.comment,
+    };
+    const res = await axios(
+      "https://cors-anywhere-capstone.herokuapp.com/" + url + "/product/addComment/" + this.state.currentItem._id,
+      requestOptions
+    );
+    if (res.status === 200) {
+      this.setState({addingComment:false})
+    } else {
+      console.log(res);
     }
   }
+changeComment = (e) => {
+  this.setState({comment: e.currentTarget.value})
+}
   scrollToSection = (category) => {
     scroller.scrollTo(category.category_name, {
       duration: 800,
       delay: 0,
       smooth: "easeInOutQuart",
     });
-    if(this.state.showingCategories === true) {
-      this.setState({showingCategories:false})
-    }else{
-      this.setState({showingCategories:true})
+    if (this.state.showingCategories === true) {
+      this.setState({ showingCategories: false });
+    } else {
+      this.setState({ showingCategories: true });
     }
   };
   addToBasket = async (item) => {
@@ -67,24 +88,50 @@ class Catalog extends Component {
       console.log(res);
     }
   };
-  getImgSrc = (e) => {
-    console.log(e.currentTarget.src)
-    this.setState({imgToInspect:e.currentTarget.src})
-    this.setState({show:true})
-  }
+  getItem = (item) => {
+    this.setState({ currentItem: item });
+    this.setState({ imgToInspect: item.image });
+    this.setState({ show: true });
+  };
+  loadCategory = async (category) => {
+    this.setState({ loaded: false });
+    this.setState({ loading: true });
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "GET",
+    };
+    const res = await axios(
+      url + `/product/getCategory/${category}`,
+      requestOptions
+    );
+    if (res.status === 200) {
+      this.setState({ categories: res.data });
+      this.setState({ loading: false });
+      this.setState({ loaded: true });
+    } else {
+      console.log(res);
+    }
+  };
+  handleCommentSection = () => {
+    if (this.state.showComments) {
+      this.setState({ showComments: false });
+    } else {
+      this.setState({ showComments: true });
+    }
+  };
   componentDidMount = async () => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
     };
     const res = await axios(
-      url + "/categoryForBathroom/zaBanq",
+      url + "/product/getCategory/SanitarnaKeramika",
       requestOptions
     );
     if (res.status === 200) {
-      this.setState({ categories: res.data.categories });
+      this.setState({ categories: res.data });
       this.setState({ loading: false });
+      this.setState({ loaded: true });
     } else {
       console.log(res);
     }
@@ -92,9 +139,6 @@ class Catalog extends Component {
   render() {
     return (
       <>
-       
-   
-
         <Row
           className={
             this.state.loading ? " d-flex justify-content-center" : "d-none"
@@ -102,86 +146,189 @@ class Catalog extends Component {
         >
           <img src="https://studio.code.org/v3/assets/hDNGCz0MfJ-xlRq6yeKqI69d0m9QDG8RRIM23pMHlBk/loading-bar-1.gif" />{" "}
         </Row>
-        {this.state.categories.map((x) => (
-          <>
-            <Row className="catalog1"> <Row className = "lineRow"/>
-              <Col sm={12} className="categoryCol d-flex justify-content-center">
-              <Row>
-                <h className={x.category_name + " heading mb-5 "}>
-                  {x.category_name}{" "} 
-  
-                </h>{" "}
-                <Row>
-                <BsSearch className="searchIcon" onClick = {() => this.showCategories()}/>
-                <Container className={this.state.showingCategories ? "categoryNavbar " : "catNav"}>
-          {this.props.products.allProducts
-            .sort(function (a, b) {
-              // ASC  -> a.length - b.length
-              // DESC -> b.length - a.length
-              return a.category_name.length - b.category_name.length;
-            })
-            .map((x) => (
-              <>
-                <Row className="navigationHeading d-flex justify-content-center mt-4 mb-4">
-                <h onClick={() => this.scrollToSection(x)}>   {x.category_name}{" "} </h>
-                
-                </Row>{" "}
-              </>
-            ))}
+        <Row
+          className={
+            this.state.loading
+              ? "d-none"
+              : "categoriesBtnRow d-flex justify-content-center mt-5"
+          }
+        >
+          <Col sm={2} className="d-flex justify-content-center">
+            <button
+              className="categoryBtn"
+              onClick={() => this.loadCategory("SanitarnaKeramika")}
+            >
+              {" "}
+              Санитарна керамика{" "}
+            </button>
+          </Col>
+          <Col sm={2} className="d-flex justify-content-center">
+            <button
+              className="categoryBtn"
+              onClick={() => this.loadCategory("Smesiteli")}
+            >
+              {" "}
+              Смесители{" "}
+            </button>
+          </Col>
+          <Col sm={2} className="d-flex justify-content-center">
+            <button
+              className="categoryBtn"
+              onClick={() => this.loadCategory("Dushove")}
+            >
+              {" "}
+              Душове{" "}
+            </button>
+          </Col>
+          <Col sm={2} className="d-flex justify-content-center">
+            <button
+              className="categoryBtn"
+              onClick={() => this.loadCategory("Aksesoari")}
+            >
+              {" "}
+              Аксесоари{" "}
+            </button>
+          </Col>
+          <Col sm={2} className="d-flex justify-content-center">
+            <button
+              className="categoryBtn"
+              onClick={() => this.loadCategory("Drugi")}
+            >
+              {" "}
+              Други{" "}
+            </button>
+          </Col>
+        </Row>
+        <Row className={this.state.loading ? "d-none" : "catalog1"}>
+          {" "}
+          <Row className="lineRow" />
+          <Col sm={12} className="categoryCol d-flex justify-content-center">
+            <Row className={this.state.loaded ? "show" : "d-none"}>
+              <h className=" heading mb-5 ">
+                {this.state.loaded ? this.state.categories[0].category : "wait"}{" "}
+              </h>{" "}
+              <Row></Row>
+            </Row>
+          </Col>{" "}
+        </Row>
+
+        <Row
+          className={
+            this.state.loading
+              ? "d-none"
+              : "products d-flex justify-content-center"
+          }
+        >
+          {this.state.categories.map((item) => (
+            <>
+              <Col
+                lg={2}
+                md={4}
+                s={6}
+                className="d-flex justify-content-center"
+              >
+                <Container className="productCol1  shadow-lg p-3 mb-5 bg-white rounded">
+                  <Row className="d-flex justify-content-center">
+                    <img
+                      src={item.image}
+                      className="productImg"
+                      onClick={() => this.getItem(item)}
+                    />
+                  </Row>
+                  <Row className="productHeading d-flex justify-content-center">
+                    <h className={item.productName}>
+                      {item.productName.slice(0, 20)}{" "}
+                    </h>
+                  </Row>
+                  <Row className="price d-flex justify-content-center mt-2">
+                    {item.productPrice}
+                  </Row>
+                  <Row className="d-flex justify-content-center mt-2">
+                    Brand: {item.manifacturedBy}
+                  </Row>
+                  <Row className="d-flex justify-content-center mt-2">
+                    Series: {item.category_collection}
+                  </Row>
+                  <Row className="basket d-flex justify-content-center mt-0.5">
+                    <GrBasket onClick={() => this.addToBasket(item)} />
+                  </Row>
+                </Container>
+              </Col>
+            </>
+          ))}{" "}
+        </Row>
+
+        <Modal show={this.state.show} className="modal">
+          <Modal.Body className="modalBody">
+            <Row className="headingModal d-flex justify-content-center">
+              {this.state.currentItem.productName}
+            </Row>
+            <img
+              className="inspectImg shadow-lg p-3 mb-5 bg-white rounded"
+              src={this.state.imgToInspect}
+            />
+
+            <Row
+              sm={12}
+              className="headingModal2 d-flex justify-content-center"
+            >
+              Описание
+            </Row>
+
+            <Row>
+              <Col
+                sm={12}
+                className="description text-center shadow-lg p-3 mb-5 bg-white rounded"
+              >
+                {this.state.currentItem.productDescription}{" "}
+              </Col>
+            </Row>
+            <Row className="priceModal d-flex justify-content-center shadow-lg p-3 mb-5 bg-white rounded">
+              Цена:{this.state.currentItem.productPrice} лв.
+            </Row>
+            <Row className="seeReviews mt-5 d-flex justify-content-center ">
+              <p onClick={() => this.handleCommentSection()}>
+                {this.state.showComments ? "Hide Reviews" : "See Reviews"}{" "}
+              </p>{" "}
+            </Row>
+            <Container
+              className={this.state.showComments ? "commentSection " : "d-none"}
+            >
+              {this.state.showComments &&
+                this.state.currentItem.comments.map((comment) => (
+                  <Row className="d-flex justify-content-left ml-1 mt-1">
+                    <p className="mt-1"> {comment.user} </p>{" "}
+                    <p className="commentText">{comment.text}</p>
+                  </Row>
+                ))}
+                 <div className="textInput mb-1">
+                <input  className = "input" onChange = {(e)=> this.changeComment(e)}/>
+                <Button
+                  variant="secondary"
+                  className = "addCommentBtn"
+                  onClick = {() => this.addComment()}
+                >
+                  Add
+                  </Button>
+                </div>
+            </Container>
+          </Modal.Body>
+          <Modal.Footer className="modalFooter">
            
-        </Container>
-        </Row>
-        </Row>
-              </Col>{" "}
-            </Row>
-
-            <Row className="products d-flex justify-content-center">
-              {x.products.map((item) => (
-                <>
-                  <Col
-                    lg={2}
-                    md={4}
-                    s={6}
-                    className="d-flex justify-content-center"
-                  >
-                    <Container className="productCol1  shadow-lg p-3 mb-5 bg-white rounded">
-                      <Row className="d-flex justify-content-center">
-                        <img src={item.image} className="productImg" onClick = {(e)=> this.getImgSrc(e)}/>
-                      </Row>
-                      <Row className="productHeading d-flex justify-content-center">
-                        <h className={item.heading}>{item.heading.slice(0,20) } </h>
-                      </Row>
-                      <Row className="price d-flex justify-content-center mt-2">
-                        {item.price}
-                      </Row>
-                      <Row className="d-flex justify-content-center mt-2">
-Brand: {item.brand}
-
-                      </Row>
-                      <Row className="d-flex justify-content-center mt-2">
-                      Series: {item.series}
-                      </Row>
-                      <Row className="basket d-flex justify-content-center mt-0.5">
-                        <GrBasket
-                          onClick={() => this.addToBasket(item)}
-                        />
-                      </Row>
-                    </Container>
-                  </Col>
-                </>
-              ))}{" "}
-            </Row>
-          </>
-        ))}
-         <Modal show={this.state.show} >
-       
-        <Modal.Body><img className ="inspectImg" src = {this.state.imgToInspect}/></Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick = {()=> this.setState({show:false})}>
-              Close
-            </Button>
-            </Modal.Footer>
-      </Modal>
+                <Button
+                  variant="secondary"
+                  onClick={() => this.setState({ show: false })}
+                >
+                  Close
+                </Button>
+                <Button
+                  variant="success"
+                  onClick={() => this.addToBasket(this.state.currentItem)}
+                >
+                  Buy
+                </Button>
+          </Modal.Footer>
+        </Modal>
       </>
     );
   }
