@@ -293,7 +293,7 @@ class Catalog extends Component {
           className={
             this.state.loading
               ? "d-none"
-              : "products d-flex justify-content-center"
+              : "products d-flex justify-content-center ml-1 mr-1"
           }
         >
           {this.state.categories.map((item) => (
@@ -304,7 +304,7 @@ class Catalog extends Component {
                 s={6}
                 className="d-flex justify-content-center"
               >
-                <Container className="productCol1  shadow-lg p-3 mb-5 bg-white rounded">
+                <Container className="  shadow-lg p-3 mb-5 bg-white rounded">
                   <Row className="d-flex justify-content-center">
                     <img
                       src={item.image}
@@ -314,7 +314,7 @@ class Catalog extends Component {
                   </Row>
                   <Row className="productHeading d-flex justify-content-center">
                     <h className={item.productName}>
-                      {item.productName.slice(0, 20)}{" "}
+                      {item.productName.slice(0, 25)}{" "}
                     </h>
                   </Row>
                   <Row className="price d-flex justify-content-center mt-2">
@@ -406,21 +406,22 @@ class Catalog extends Component {
             <Row className="priceModal d-flex justify-content-center  ">
              <p className = "price2 "> Цена:{this.state.currentItem.productPrice} лв. </p>
             </Row>
-          </Modal.Body>
-          <Modal.Footer className="modalFooter">
             <Button
               variant="secondary"
               onClick={() => this.setState({ show: false })}
+              className = "closeBtn"
             >
               Close
             </Button>
             <Button
               variant="success"
               onClick={() => this.addToBasket(this.state.currentItem)}
+              className = "buyBtn"
             >
               Buy
             </Button>
-          </Modal.Footer>
+          </Modal.Body>
+          
         </Modal>
       </>
     );
