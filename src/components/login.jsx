@@ -40,6 +40,7 @@ class Login extends Component {
     if (res.status === 200) {
       console.log(res);
       localStorage.setItem('accessToken', res.data.accessToken);
+      localStorage.setItem('user', this.state.email);
   localStorage.setItem('refreshToken', res.data.refreshToken);
       window.alert("logged");
       window.location = "/home"

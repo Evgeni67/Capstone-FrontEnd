@@ -13,10 +13,9 @@ import {
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
 import "./styles/catalog.css";
-import { RiShoppingBasket2Fill } from "react-icons/ri";
 import { scroller } from "react-scroll";
 import { GrBasket } from "react-icons/gr";
-import { BsSearch } from "react-icons/bs";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 var uniqid = require("uniqid");
@@ -31,32 +30,108 @@ class Catalog extends Component {
     loaded: false,
     currentItem: "",
     showComments: false,
-    comment:"",
-    addingComment:false,
+    comment: "",
+    addingComment: false,
   };
-  addComment = async() => {
-    this.setState({addingComment:true})
+  stopLoadingNewComment = () => {
+    this.setState({ addingComment: false });
+  };
+  fizzBuzz = async () => {
+    var word = "Fizz";
+    for (var i = 1; i < 100; i++) {
+      for (var y = 1; y < 100; y++) {
+        if (y * 3 === i) {
+          word = "Fizz";
+          y = 100;
+        } else {
+          word = i;
+        }
+      }
+      for (var y = 1; y < 100; y++) {
+        if (y * 5 === i) {
+          if (word === "Fizz") {
+            word = "FizzBuzz";
+            y = 100;
+          } else {
+            word = "Buzz";
+          }
+        }
+      }
+      console.log(word);
+      word = i;
+    }
+  };
+  updateProduct = async () => {
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "GET",
+    };
+    const res = await axios(
+      url + "/product/getProduct/" + this.state.currentItem._id,
+      requestOptions
+    );
+    if (res.status === 200) {
+      console.log(res);
+      this.setState({ currentItem: res.data });
+    } else {
+      console.log(res);
+    }
+  };
+  deleteComment = async (id) => {
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "DELETE",
+    };
+    const res = await fetch(
+      url + "/product/deleteComment/" + this.state.currentItem._id + "/" + id,
+
+      requestOptions
+    );
+    if (res.status === 200) {
+      this.updateProduct();
+    } else {
+      console.log(res);
+    }
+  };
+
+  addComment = async () => {
+    this.setState({ addingComment: true });
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "POST",
       headers: {
-      "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      data:this.state.comment,
+      data: { comment: this.state.comment, user: localStorage.getItem("user") },
     };
-    const res = await axios(
-      "https://cors-anywhere-capstone.herokuapp.com/" + url + "/product/addComment/" + this.state.currentItem._id,
+    const res = await fetch(
+      url +
+        "/product/addComment/" +
+        this.state.currentItem._id +
+        "/" +
+        this.state.comment +
+        "/" +
+        localStorage.getItem("user") +
+        "/" +
+        uniqid(),
+
       requestOptions
     );
     if (res.status === 200) {
-      this.setState({addingComment:false})
+      this.updateProduct();
+      var that = this;
+      setTimeout(function () {
+        that.stopLoadingNewComment();
+      }, 720);
+         document.querySelector(".input").value = ""
     } else {
       console.log(res);
     }
-  }
-changeComment = (e) => {
-  this.setState({comment: e.currentTarget.value})
-}
+  };
+
+  changeComment = (e) => {
+    this.setState({ comment: e.currentTarget.value });
+  };
   scrollToSection = (category) => {
     scroller.scrollTo(category.category_name, {
       duration: 800,
@@ -83,7 +158,6 @@ changeComment = (e) => {
     const res = await axios(url + "/profile/addToBasket", requestOptions);
     if (res.status === 200) {
       console.log(res);
-      window.alert("item added succesfully");
     } else {
       console.log(res);
     }
@@ -112,14 +186,17 @@ changeComment = (e) => {
       console.log(res);
     }
   };
+
   handleCommentSection = () => {
     if (this.state.showComments) {
       this.setState({ showComments: false });
     } else {
       this.setState({ showComments: true });
     }
+    this.updateProduct()
   };
   componentDidMount = async () => {
+    this.fizzBuzz();
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "GET",
@@ -283,50 +360,66 @@ changeComment = (e) => {
                 {this.state.currentItem.productDescription}{" "}
               </Col>
             </Row>
-            <Row className="priceModal d-flex justify-content-center shadow-lg p-3 mb-5 bg-white rounded">
-              Цена:{this.state.currentItem.productPrice} лв.
-            </Row>
-            <Row className="seeReviews mt-5 d-flex justify-content-center ">
+           
+            <Row className="seeReviews  d-flex justify-content-center ">
               <p onClick={() => this.handleCommentSection()}>
                 {this.state.showComments ? "Hide Reviews" : "See Reviews"}{" "}
               </p>{" "}
             </Row>
             <Container
-              className={this.state.showComments ? "commentSection " : "d-none"}
+              className={this.state.showComments ? "commentSection mb-5" : "d-none"}
             >
+              <p className = "ml-1">{this.state.showComments && this.state.currentItem.comments.length === 0 ? ("Be the first one to leave a Review") : ""}</p>
               {this.state.showComments &&
                 this.state.currentItem.comments.map((comment) => (
-                  <Row className="d-flex justify-content-left ml-1 mt-1">
-                    <p className="mt-1"> {comment.user} </p>{" "}
+                  <Row className="commentRow d-flex justify-content-left ml-1 ">
+                    <p className="mt-1 ml-2"> {comment.user} </p>{" "}
                     <p className="commentText">{comment.text}</p>
+                    {comment.user === localStorage.getItem("user") ? (
+                      <RiDeleteBin6Fill
+                        className="deleteCommentBtn"
+                        onClick={() => this.deleteComment(comment.id)}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </Row>
                 ))}
-                 <div className="textInput mb-1">
-                <input  className = "input" onChange = {(e)=> this.changeComment(e)}/>
+              <div className="textInput mb-1">
+                <input
+                  className="input"
+                  onChange={(e) => this.changeComment(e)}
+                />
                 <Button
                   variant="secondary"
-                  className = "addCommentBtn"
-                  onClick = {() => this.addComment()}
+                  className="addCommentBtn"
+                  onClick={() => this.addComment()}
                 >
-                  Add
-                  </Button>
-                </div>
+                  {this.state.addingComment ? (
+                    <img src="https://i.gifer.com/ZZ5H.gif" className = "loadComment" />
+                  ) : (
+                    "Add"
+                  )}
+                </Button>
+              </div>
             </Container>
+            <Row className="priceModal d-flex justify-content-center  ">
+             <p className = "price2"> Цена:{this.state.currentItem.productPrice} лв. </p>
+            </Row>
           </Modal.Body>
           <Modal.Footer className="modalFooter">
-           
-                <Button
-                  variant="secondary"
-                  onClick={() => this.setState({ show: false })}
-                >
-                  Close
-                </Button>
-                <Button
-                  variant="success"
-                  onClick={() => this.addToBasket(this.state.currentItem)}
-                >
-                  Buy
-                </Button>
+            <Button
+              variant="secondary"
+              onClick={() => this.setState({ show: false })}
+            >
+              Close
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => this.addToBasket(this.state.currentItem)}
+            >
+              Buy
+            </Button>
           </Modal.Footer>
         </Modal>
       </>

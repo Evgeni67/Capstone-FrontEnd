@@ -44,9 +44,11 @@
 }
 .priceModal {
   color: #323232;
-  font-size: 25px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 400;
   font-family: "Kiwi Maru", serif;
+  height:40px;
+  
 }
 .price {
   color: #323232;
@@ -117,24 +119,20 @@
   border-radius: 0 !important;
 }
 .priceModal {
+ 
+}
+.price2{
+  margin-top:-18.5px;
   background-color: #ffffff;
   border: 1px solid gray;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  display: inline-block;
+  border-radius: 10px !important;
+  width: fit-content;
   padding-left: 5px;
   padding-right: 5px;
-  border-right: none;
-  border-left: none;
-  border-radius: 0 !important;
 }
 .seeReviews {
-  margin-top: 100px;
-  background-color: #ffffff;
-  border: 1px solid gray;
-  padding-top: 15px;
-  border-right: none;
-  border-left: none;
-  border-radius: 0 !important;
+ 
 }
 .headingModal {
   font-size: 38px;
@@ -150,14 +148,30 @@
   background-color:whitesmoke;
   margin-left: 5px;
 }
-
+.deleteCommentBtn{
+  position:absolute;
+  right:120px;
+  margin-top: 9px;
+  color: darkred
+}
+.loadComment{
+  width:25px
+}
 .textInput{
  
 }
+
 .input{
+  -webkit-appearance: none;
   height:37px;
+  border-radius: 10px 0px 0px 10px;
+  box-shadow : none; 
+  border: 1.5px solid gray;
+  margin-bottom: 10px;
+  margin-left: 9px;
 }
-.input:active{
+input:focus, textarea:focus, select:focus{
+  outline: none;
 }
 .addCommentBtn{
   z-index: 10;
@@ -166,16 +180,28 @@
  border-radius: 0px 10px 10px 0px;
  margin-left: -3px;
 }
+.addCommentBtn:active {
+  outline: none;
+  border: none;
+}
+.addCommentBtn:focus{
+  outline: 0;
+}
 .headingModal2 {
   font-size: 20px;
 }
 .commentSection{
   border:1px solid gray;
-  margin-top:15px;
   border-radius: 15px;
   background-color:white;
   width:280px;
   padding-top: 7px;
+}
+.commentRow{
+  border-bottom: 1px solid gray;
+margin-bottom: 23px;
+width:278px !important;
+margin-left: -15px !important;
 }
 .seeReviews {
   margin-top: -40px;
