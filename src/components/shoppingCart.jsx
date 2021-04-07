@@ -10,7 +10,7 @@ class ShoppingCart extends Component {
     totalPrice: 0,
     loading: true,
   };
-  removeFromBasket = async (_id) => {
+  removeFromBasket = async (_id,productPrice) => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "POST",
@@ -24,12 +24,7 @@ class ShoppingCart extends Component {
     };
     const res = await axios(url + "/profile/removeFromCart", requestOptions);
     this.setState({ shoppingList: res.data.productsInTheBasket });
-    var price = 0.0;
-    res.data.productsInTheBasket.map(
-      (item) =>
-        (price += parseFloat(item.price.slice(0, item.price.length - 3)))
-    );
-    price = price.toFixed(2);
+    var price = this.state.totalPrice - parseFloat(productPrice).toFixed(2);
     this.setState({ totalPrice: price });
   };
   sendOrder = async () => {
@@ -77,8 +72,8 @@ class ShoppingCart extends Component {
       var price = 0.0;
       res.data.productsInTheBasket.map(
         (item) =>
-          (price += parseFloat(item.price.slice(0, item.price.length - 3)))
-      );
+          (price += parseFloat(item.productPrice)
+      ))
       price = price.toFixed(2);
       this.setState({ totalPrice: price });
       this.setState({ loading: false });
@@ -98,41 +93,41 @@ class ShoppingCart extends Component {
         </Row>
         <Row className = "catalog">
           {this.state.shoppingList.map((item) => (
-            <Container className="productCol">
+            <Container className="containerShopping">
               <Row>
                 <Col className="d-flex justify-content-center" sm={4}>
                   {" "}
                   <img src={item.image} className="productImg2" />{" "}
                 </Col>
 
-                <Col sm={4}>
+                <Col className = "infoCol"sm={4}>
                   {" "}
                   <Row className="center">
-                    <h className="itemHeading">{item.heading} </h>
+                    <h className="itemHeading">{item.productName} </h>
                   </Row>
                   <Row className="center descriptionRow">
                     <h className="">Описание </h>
                   </Row>
                   <Row className="center">
-                    <h className="  itemDescription">{item.description} </h>
+                    <h className="  itemDescription">{item.productDescription} </h>
                   </Row>
                   <Row className="center d-flex justify-content-right price">
                     {" "}
-                    Цена <strong>: {item.price}</strong>{" "}
+                    Цена <strong>: {item.productPrice}</strong>{" "}
                   </Row>
                 </Col>
                 <Col sm={3}>
-                  <Row className="d-flex justify-content-center mt-2">
-                    Brand: {item.brand}
+                  <Row className="d-flex justify-content-center mt-5">
+                    Brand: {item.manifacturedBy}
                   </Row>
-                  <Row className="d-flex justify-content-center mt-2">
-                    Series: {item.series}
+                  <Row className="d-flex justify-content-center ">
+                    Series: {item.category_collection}
                   </Row>
                 </Col>
+                <Col sm={1}>
                 <TiDelete
-                  className="removeFromBasketBtn"
-                  onClick={() => this.removeFromBasket(item.id)}
-                />
+                  onClick={() => this.removeFromBasket(item.id,item.productPrice)}/>
+                  </Col>
               </Row>
             </Container>
           ))}{" "}
@@ -153,7 +148,7 @@ class ShoppingCart extends Component {
           className={
             this.state.totalPrice === "0.00"
               ? "checkOutCol d-none"
-              : "checkOutCol"
+              : "checkOutCol mt-5"
           }
         >
           {" "}
@@ -165,9 +160,9 @@ class ShoppingCart extends Component {
             {" "}
             Доставка: 10лв.
           </Row>
-          <Row className="text d-flex justify-content-center">
+          <Row className="text d-flex justify-content-center mb-3">
             {" "}
-            <strong>Общо: {parseFloat(this.state.totalPrice) + 10}лв.</strong>
+            Общо: <strong>{parseFloat(this.state.totalPrice) + 10}лв.</strong>
           </Row>
           <Row>
             <button className="chekoutBtn" onClick = {() => this.sendOrder()}>Chekout </button>

@@ -404,7 +404,7 @@ class Catalog extends Component {
               </div>
             </Container>
             <Row className="priceModal d-flex justify-content-center  ">
-             <p className = "price2"> Цена:{this.state.currentItem.productPrice} лв. </p>
+             <p className = "price2 "> Цена:{this.state.currentItem.productPrice} лв. </p>
             </Row>
           </Modal.Body>
           <Modal.Footer className="modalFooter">
