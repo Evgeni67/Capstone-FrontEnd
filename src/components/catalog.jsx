@@ -18,6 +18,22 @@ import { GrBasket } from "react-icons/gr";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  changeCategory: (category) =>
+    dispatch(async (dispatch, getState) => {
+      dispatch({
+        type: "CHANGE_CURRENT_CATEGORY",
+        payload: category,
+      });
+    }),
+  changeProducts: (products) =>
+    dispatch(async (dispatch, getState) => {
+      dispatch({
+        type: "FILTER_PRODUCTS",
+        payload: products,
+      });
+    }),
+});
 var uniqid = require("uniqid");
 class Catalog extends Component {
   state = {
@@ -32,6 +48,7 @@ class Catalog extends Component {
     showComments: false,
     comment: "",
     addingComment: false,
+    currentCategory: "",
   };
   stopLoadingNewComment = () => {
     this.setState({ addingComment: false });
@@ -123,7 +140,7 @@ class Catalog extends Component {
       setTimeout(function () {
         that.stopLoadingNewComment();
       }, 720);
-         document.querySelector(".input").value = ""
+      document.querySelector(".input").value = "";
     } else {
       console.log(res);
     }
@@ -168,6 +185,8 @@ class Catalog extends Component {
     this.setState({ show: true });
   };
   loadCategory = async (category) => {
+    this.setState({ currentCategory: category });
+    this.props.changeCategory(category);
     this.setState({ loaded: false });
     this.setState({ loading: true });
     const url = process.env.REACT_APP_URL;
@@ -180,6 +199,7 @@ class Catalog extends Component {
     );
     if (res.status === 200) {
       this.setState({ categories: res.data });
+      this.props.changeProducts(res.data);
       this.setState({ loading: false });
       this.setState({ loaded: true });
     } else {
@@ -193,7 +213,6 @@ class Catalog extends Component {
     } else {
       this.setState({ showComments: true });
     }
-    this.updateProduct()
   };
   componentDidMount = async () => {
     this.fizzBuzz();
@@ -207,6 +226,7 @@ class Catalog extends Component {
     );
     if (res.status === 200) {
       this.setState({ categories: res.data });
+      this.props.changeProducts(res.data);
       this.setState({ loading: false });
       this.setState({ loaded: true });
     } else {
@@ -216,6 +236,7 @@ class Catalog extends Component {
   render() {
     return (
       <>
+       
         <Row
           className={
             this.state.loading ? " d-flex justify-content-center" : "d-none"
@@ -296,7 +317,7 @@ class Catalog extends Component {
               : "products d-flex justify-content-center ml-1 mr-1"
           }
         >
-          {this.state.categories.map((item) => (
+          {this.props.products.products.map((item) => (
             <>
               <Col
                 lg={2}
@@ -318,7 +339,7 @@ class Catalog extends Component {
                     </h>
                   </Row>
                   <Row className="price d-flex justify-content-center mt-2">
-                    {item.productPrice}
+                    {parseFloat(item.productPrice).toFixed(2)}
                   </Row>
                   <Row className="d-flex justify-content-center mt-2">
                     Brand: {item.manifacturedBy}
@@ -340,11 +361,12 @@ class Catalog extends Component {
             <Row className="headingModal d-flex justify-content-center">
               {this.state.currentItem.productName}
             </Row>
-            <img
-              className="inspectImg shadow-lg p-3 mb-5 bg-white rounded"
-              src={this.state.imgToInspect}
-            />
-
+            <Row className=" d-flex justify-content-center">
+              <img
+                className="modalImg shadow-lg p-3 mb-5 bg-white rounded"
+                src={this.state.imgToInspect}
+              />
+            </Row>
             <Row
               sm={12}
               className="headingModal2 d-flex justify-content-center"
@@ -360,16 +382,23 @@ class Catalog extends Component {
                 {this.state.currentItem.productDescription}{" "}
               </Col>
             </Row>
-           
+
             <Row className="seeReviews  d-flex justify-content-center ">
               <p onClick={() => this.handleCommentSection()}>
                 {this.state.showComments ? "Hide Reviews" : "See Reviews"}{" "}
               </p>{" "}
             </Row>
             <Container
-              className={this.state.showComments ? "commentSection mb-5" : "d-none"}
+              className={
+                this.state.showComments ? "commentSection mb-5" : "d-none"
+              }
             >
-              <p className = "ml-1">{this.state.showComments && this.state.currentItem.comments.length === 0 ? ("Be the first one to leave a Review") : ""}</p>
+              <p className="ml-1">
+                {this.state.showComments &&
+                this.state.currentItem.comments.length === 0
+                  ? "Be the first one to leave a Review"
+                  : ""}
+              </p>
               {this.state.showComments &&
                 this.state.currentItem.comments.map((comment) => (
                   <Row className="commentRow d-flex justify-content-left ml-1 ">
@@ -396,7 +425,10 @@ class Catalog extends Component {
                   onClick={() => this.addComment()}
                 >
                   {this.state.addingComment ? (
-                    <img src="https://i.gifer.com/ZZ5H.gif" className = "loadComment" />
+                    <img
+                      src="https://i.gifer.com/ZZ5H.gif"
+                      className="loadComment"
+                    />
                   ) : (
                     "Add"
                   )}
@@ -404,27 +436,29 @@ class Catalog extends Component {
               </div>
             </Container>
             <Row className="priceModal d-flex justify-content-center  ">
-             <p className = "price2 "> Цена:{this.state.currentItem.productPrice} лв. </p>
+              <p className="price2 ">
+                {" "}
+                Цена:{this.state.currentItem.productPrice} лв.{" "}
+              </p>
             </Row>
             <Button
               variant="secondary"
               onClick={() => this.setState({ show: false })}
-              className = "closeBtn"
+              className="closeBtn"
             >
               Close
             </Button>
             <Button
               variant="success"
               onClick={() => this.addToBasket(this.state.currentItem)}
-              className = "buyBtn"
+              className="buyBtn"
             >
               Buy
             </Button>
           </Modal.Body>
-          
         </Modal>
       </>
     );
   }
 }
-export default connect(mapStateToProps)(Catalog);
+export default connect(mapStateToProps, mapDispatchToProps)(Catalog);

@@ -14,27 +14,7 @@ import { connect } from "react-redux";
 import "./styles/home.css";
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
-  addDataToGlobal: (description, location) =>
-    dispatch(async (dispatch, getState) => {
-      const url = process.env.REACT_APP_URL;
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      const res = await axios(
-        url + "/categoryForBathroom/zaBanq",
-        requestOptions
-      );
-      if (res.status === 200) {
-        console.log("Got 200 response");
-        dispatch({
-          type: "ADD_FETCHED_PRODUCTS",
-          payload: res.data.categories,
-        });
-      } else {
-        console.log(res);
-      }
-    }),
+ 
   startLoading: () =>
     dispatch({
       type: "START_LOADING",
@@ -48,11 +28,9 @@ const mapDispatchToProps = (dispatch) => ({
 class Home extends Component {
   state = {
     showMiniMarket: false,
+    
   };
-  componentDidMount = async () => {
-    //loading the data here so we do not have to wait at the catalog component
-    this.props.addDataToGlobal()
-  };
+ 
   showMiniMarket = () => {
     if (this.state.showMiniMarket) {
       this.setState({ showMiniMarket: false });
@@ -125,6 +103,7 @@ class Home extends Component {
             </Row>
           </Container>
         </Row>
+        <Container className = "homePageContainer mt-5"></Container>
       </>
     );
   }

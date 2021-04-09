@@ -13,11 +13,21 @@ export default function (state = {}, action) {
             (x) => x.id !== action.payload
           ),
         };
+        case "CHANGE_CURRENT_CATEGORY":
+        return {
+          ...state,
+          category: action.payload
+        };
       case "ADD_FETCHED_PRODUCTS":
         return {
           ...state,
           allProducts: action.payload,
         };
+        case "FILTER_PRODUCTS":
+          return {
+            ...state,
+            products: action.payload,
+          };
         case "ADD_PRODUCT_TO_CART":
             return {
               ...state,

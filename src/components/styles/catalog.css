@@ -32,6 +32,9 @@
   border-top : 1px solid lightgray;
 }
 @media screen and (max-width: 765px) {
+  .modalBody{
+    width:520px !important
+  }
   .categoryBtn {
     border-radius: 10px 10px 10px 10px !important;
     margin-bottom: 70px !important;
@@ -104,6 +107,9 @@
   transition: ease-in-out 0.3s;
   background-color: #d3d3d3;
   margin-bottom: 20px !important;
+}
+.modalImg{
+  margin:auto;
 }
 img:hover{
   background-color:black;

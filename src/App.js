@@ -19,6 +19,7 @@ import Register from "./components/register";
 import MyFooter from "./components/footer";
 import Catalog from "./components/catalog";
 import ShoppingCart from "./components/shoppingCart"
+import Contacts from "./components/contacts"
 class App extends Component {
   render() {
     return (
@@ -29,6 +30,9 @@ class App extends Component {
           <Route path="/home">
             {" "}
             <Home />
+          </Route>
+          <Route path="/contacts">
+          <Contacts/>
           </Route>
           <Route path="/login">
             <Login />

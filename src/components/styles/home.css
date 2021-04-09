@@ -14,6 +14,10 @@
     rgba(197, 179, 160, 1) 90%
   );
 }
+.homePageContainer{
+  height:600px;
+  background-color: #F7F7F7;
+}
 .closedMiniMarket {
  
   height: 564px;

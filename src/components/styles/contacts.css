@@ -1,0 +1,53 @@
+.address {
+  margin-top: -15px;
+}
+.pricingCall {
+  width: 350px;
+  color: gray;
+  font-size: 15px;
+}
+.container1 {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 30px;
+}
+.textUs {
+  font-size: 23px;
+  margin-top: -40px;
+}
+.container2 {
+  width: 600px !important;
+}
+.input1 {
+  width: 270px;
+  border: 1px solid whitesmoke !important;
+  border-radius: 5px;
+  height: 33px;
+}
+.checkBoxText {
+  font-size: 13px;
+  margin-left: 5px;
+  margin-top: -2px;
+}
+.checkBox {
+  border-radius: 50px !important;
+}
+.input2 {
+  width: 575px !important;
+  border: 1px solid whitesmoke !important;
+  border-radius: 5px;
+}
+.input3 {
+  width: 575px !important;
+  height: 120px !important;
+  border: 1px solid whitesmoke !important;
+  border-radius: 5px;
+}
+.sendBtn {
+  border: 1px solid whitesmoke !important;
+    ;
+  padding-left: 16.5px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  border-radius: 10px;
+  width: 100%;
+}
