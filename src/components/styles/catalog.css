@@ -74,6 +74,12 @@
   height:40px;
   
 }
+.productContainer{
+  margin-bottom: 30px !important;
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  height:400px;
+}
 .price {
   color: #323232;
   font-size: 25px;
@@ -111,7 +117,7 @@
 .modalImg{
   margin:auto;
 }
-img:hover{
+.productImg:hover{
   background-color:black;
   opacity:0.5
 }
@@ -129,7 +135,6 @@ img:hover{
   width: 196px;
   height: 220px;
   margin-top: -15px;
-  border-bottom: 1px solid lightgray;
 }
 .closeBtn{
   margin-left: 5px;
@@ -187,12 +192,7 @@ img:hover{
   background-color:whitesmoke;
   margin-left: 5px;
 }
-.deleteCommentBtn{
-  position:absolute;
-  right:120px;
-  margin-top: 9px;
-  color: darkred
-}
+
 .loadComment{
   width:25px
 }
@@ -200,19 +200,7 @@ img:hover{
  
 }
 
-.input{
-  -webkit-appearance: none;
-  height:37px;
-  border-radius: 10px 0px 0px 10px;
-  box-shadow : none; 
-  border: 1.5px solid gray;
-  margin-bottom: 10px;
-  margin-left: 9px;
-  width:300px
-}
-input:focus, textarea:focus, select:focus{
-  outline: none;
-}
+
 .addCommentBtn{
   z-index: 10;
   height:37px;
@@ -231,19 +219,8 @@ input:focus, textarea:focus, select:focus{
 .headingModal2 {
   font-size: 20px;
 }
-.commentSection{
-  border:1px solid gray;
-  border-radius: 15px;
-  background-color:white;
-  width:400px;
-  padding-top: 7px;
-}
-.commentRow{
-  border-bottom: 1px solid gray;
-margin-bottom: 23px;
-width:399px !important;
-margin-left: -15px !important;
-}
+
+
 .seeReviews {
   margin-top: -40px;
   font-size: 18px;

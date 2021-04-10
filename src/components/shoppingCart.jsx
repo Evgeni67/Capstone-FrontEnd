@@ -25,7 +25,7 @@ class ShoppingCart extends Component {
     const res = await axios(url + "/profile/removeFromCart", requestOptions);
     this.setState({ shoppingList: res.data.productsInTheBasket });
     var price = this.state.totalPrice - parseFloat(productPrice).toFixed(2);
-    this.setState({ totalPrice: price });
+    this.setState({ totalPrice: price.toFixed(2) });
   };
   sendOrder = async () => {
     const url = process.env.REACT_APP_URL;

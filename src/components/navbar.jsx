@@ -81,7 +81,7 @@ class MyNavbar extends Component {
     return (
       <>
         {" "}
-        <Row>
+        <Row className = "navBody">
           <Col className="d-flex justify-content-center" sm={4} xs={12}>
             <h className="logoText">L.O.G.O. </h>
           </Col>

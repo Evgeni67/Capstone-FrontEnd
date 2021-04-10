@@ -20,6 +20,7 @@ import MyFooter from "./components/footer";
 import Catalog from "./components/catalog";
 import ShoppingCart from "./components/shoppingCart"
 import Contacts from "./components/contacts"
+import ProductPage from "./components/productPage"
 class App extends Component {
   render() {
     return (
@@ -30,6 +31,10 @@ class App extends Component {
           <Route path="/home">
             {" "}
             <Home />
+          </Route>
+          <Route path="/productPage">
+            {" "}
+            <ProductPage />
           </Route>
           <Route path="/contacts">
           <Contacts/>

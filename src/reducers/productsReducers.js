@@ -18,6 +18,11 @@ export default function (state = {}, action) {
           ...state,
           category: action.payload
         };
+        case "CHANGE_CURRENT_PRODUCT":
+          return {
+            ...state,
+            currentProduct: action.payload
+          };
       case "ADD_FETCHED_PRODUCTS":
         return {
           ...state,

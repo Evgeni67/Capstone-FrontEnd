@@ -19,6 +19,13 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
+  changeCurrentProduct: (product) =>
+    dispatch(async (dispatch, getState) => {
+      dispatch({
+        type: "CHANGE_CURRENT_PRODUCT",
+        payload: product,
+      });
+    }),
   changeCategory: (category) =>
     dispatch(async (dispatch, getState) => {
       dispatch({
@@ -325,13 +332,15 @@ class Catalog extends Component {
                 s={6}
                 className="d-flex justify-content-center"
               >
-                <Container className="  shadow-lg p-3 mb-5 bg-white rounded">
+                <Container className="productContainer shadow-lg p-3 mb-5 bg-white rounded">
                   <Row className="d-flex justify-content-center">
+                    <Link to ="/productPage">
                     <img
                       src={item.image}
                       className="productImg"
-                      onClick={() => this.getItem(item)}
+                      onClick={() => this.props.changeCurrentProduct(item)}
                     />
+                    </Link>
                   </Row>
                   <Row className="productHeading d-flex justify-content-center">
                     <h className={item.productName}>
@@ -339,7 +348,7 @@ class Catalog extends Component {
                     </h>
                   </Row>
                   <Row className="price d-flex justify-content-center mt-2">
-                    {parseFloat(item.productPrice).toFixed(2)}
+                    {parseFloat(item.productPrice).toFixed(2)} Лв.
                   </Row>
                   <Row className="d-flex justify-content-center mt-2">
                     Brand: {item.manifacturedBy}

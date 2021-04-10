@@ -1,0 +1,132 @@
+.modalImg{
+    position: absolute;
+    top:0
+}
+
+.ratingRow{
+    width: 130px;
+}
+.commentUser{
+    margin-left: 3px;
+    font-size: 14px;
+}
+.commentText2{
+    font-size: 13.5px;
+}
+.commentTitle{
+    margin-top: -10px;
+   
+}
+.mainCommentRow{
+    border-top: 0.5px dashed lightgray;
+    padding-top: 20px;
+}
+.imageComment{
+    background-color: #E9E9E9;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    color:black;
+    text-align: center;
+    padding-top: 12px;
+    padding-right: 1px;
+    font-size:13px
+}
+.buyBtn{
+    width: 100%;
+}
+.productContainer1{
+    margin-bottom: 200px !important;
+}
+.deleteComment{
+    margin-left: 20px;
+    color:darkred
+}
+.brandImg{
+    width: 90px;
+margin-top: -10px;
+}
+.headingContainer{
+    font-family: "Kiwi Maru", serif;
+  font-size: 30px;
+  margin-top: -10px;
+}
+.price{
+    font-size: 20px;
+    margin-top:-3px;
+}
+.seeReviews2 {
+    background-color: #005AAA;
+    margin-right: 15px;
+}
+.titleInput{
+    width: 100%;
+    border:1px solid lightgray;
+    height: 37px;
+
+}
+.reviewInput{
+    width: 100%;
+    border:1px solid lightgray;
+    height: 150px;
+}
+.addCommentBtn{
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 0px 0px 0px 0px;
+    margin-left: 0px;
+    height: 45px;
+    background-color: #514343;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.commentSection{
+    margin-top: -180px;
+}
+.star{
+    color:gold
+}
+.star4:hover ~ .star5  {
+    
+    color: gray;
+}
+.star3:hover ~ .star5  {
+    
+    color: gray;
+}
+.star3:hover ~ .star4  {
+    
+    color: gray;
+}
+.star2:hover ~ .star3  {
+    
+    color: gray;
+}
+.star2:hover ~ .star4  {
+    
+    color: gray;
+}
+.star2:hover ~ .star5  {
+    
+    color: gray;
+}
+.star1:hover ~ .star2  {
+    
+    color: gray;
+}
+.star1:hover ~ .star3  {
+    
+    color: gray;
+}
+.star1:hover ~ .star4  {
+    
+    color: gray;
+}
+.star1:hover ~ .star5  {
+    
+    color: gray;
+}
+.star1:hover ~ .star5  {
+    
+    color: gray;
+}

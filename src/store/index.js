@@ -9,7 +9,8 @@ export const initialState = {
   products: {
     allProducts: [],
     products:[],
-    currentCategory:""
+    currentCategory:"",
+    currentProduct:{},
   },
   load: {
     loading: false,
