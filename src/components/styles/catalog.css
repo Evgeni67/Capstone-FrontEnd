@@ -20,7 +20,11 @@
   border: 1px solid lightgray;
   border-radius: 2px;
 }
-
+.sortBy{
+  position: absolute;
+  right:40px;
+  margin-top: 20px;
+}
 .categoryCol {
   background: linear-gradient(
     180deg,
@@ -80,6 +84,10 @@
   padding-right: 25px !important;
   height:400px;
 }
+.dropdown{
+  background-color:none !important;
+border:none !important
+}
 .price {
   color: #323232;
   font-size: 25px;
@@ -118,8 +126,20 @@
   margin:auto;
 }
 .productImg:hover{
-  background-color:black;
   opacity:0.5
+}
+.views{
+  color:#040404
+
+}
+.hot{
+  position: absolute;
+  top:12px;
+  right:30px
+}
+.eye{
+  color:#8D8D8D;
+  font-size: 19px;
 }
 .categoryBtn:hover {
   height: 100px;
@@ -135,6 +155,8 @@
   width: 196px;
   height: 220px;
   margin-top: -15px;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 5px;
 }
 .closeBtn{
   margin-left: 5px;
@@ -219,7 +241,10 @@
 .headingModal2 {
   font-size: 20px;
 }
-
+.downIcon{
+  font-size: 30px;
+  margin-left: -5px;
+}
 
 .seeReviews {
   margin-top: -40px;
@@ -228,6 +253,12 @@
 .productHeading {
   margin-top: 10px;
   font-size: 16px;
+  font-weight: 500;
+}
+.sortRow{
+  position: absolute;
+  right:30px;
+  top:30px
 }
 .searchIcon {
   margin-left: 30px;

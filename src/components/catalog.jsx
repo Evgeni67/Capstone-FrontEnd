@@ -8,6 +8,8 @@ import {
   Row,
   Col,
   Container,
+  DropdownButton,
+  Dropdown,
   Modal,
 } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -15,7 +17,11 @@ import axios from "axios";
 import "./styles/catalog.css";
 import { scroller } from "react-scroll";
 import { GrBasket } from "react-icons/gr";
+import {WiDirectionUp}  from "react-icons/wi";
+import {WiDirectionDown}  from "react-icons/wi";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import {ImEye} from "react-icons/im"
+import {FaHotjar} from "react-icons/fa"
 import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
@@ -57,6 +63,18 @@ class Catalog extends Component {
     addingComment: false,
     currentCategory: "",
   };
+  filterByPriceDsc = async() => {
+    var filteredArray = this.props.products.products.sort((a, b) => parseFloat(b.productPrice) - parseFloat(a.productPrice))
+    this.props.changeProducts(filteredArray);
+    this.setState({loading:false})
+    console.log(filteredArray)
+  }
+  filterByPriceAsc = async() => {
+    var filteredArray = this.props.products.products.sort((a, b) => parseFloat(a.productPrice) - parseFloat(b.productPrice))
+    this.props.changeProducts(filteredArray);
+    this.setState({loading:false})
+    console.log(filteredArray)
+  }
   stopLoadingNewComment = () => {
     this.setState({ addingComment: false });
   };
@@ -213,7 +231,21 @@ class Catalog extends Component {
       console.log(res);
     }
   };
-
+  addView = async (item) => {
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "POST",
+    };
+    const res = await axios(
+      url + `/product/addView/${item._id}`,
+      requestOptions
+    );
+    if (res.status === 200) {
+      this.props.changeCurrentProduct(item)
+    } else {
+      console.log(res);
+    }
+  };
   handleCommentSection = () => {
     if (this.state.showComments) {
       this.setState({ showComments: false });
@@ -243,7 +275,6 @@ class Catalog extends Component {
   render() {
     return (
       <>
-       
         <Row
           className={
             this.state.loading ? " d-flex justify-content-center" : "d-none"
@@ -311,9 +342,16 @@ class Catalog extends Component {
             <Row className={this.state.loaded ? "show" : "d-none"}>
               <h className=" heading mb-5 ">
                 {this.state.loaded ? this.state.categories[0].category : "wait"}{" "}
+              
               </h>{" "}
-              <Row></Row>
+           
+             
             </Row>
+            <Row className ="sortRow">
+            <h5> Sort by </h5>
+              <h5 className = "ml-3 mr-2" onClick = {() => this.filterByPriceAsc()}> Price<WiDirectionUp /> </h5>
+              <h5  onClick = {() => this.filterByPriceDsc()}> Price<WiDirectionDown className = "downIcon"/></h5>
+              </Row>
           </Col>{" "}
         </Row>
 
@@ -334,12 +372,12 @@ class Catalog extends Component {
               >
                 <Container className="productContainer shadow-lg p-3 mb-5 bg-white rounded">
                   <Row className="d-flex justify-content-center">
-                    <Link to ="/productPage">
-                    <img
-                      src={item.image}
-                      className="productImg"
-                      onClick={() => this.props.changeCurrentProduct(item)}
-                    />
+                    <Link to="/productPage">
+                      <img
+                        src={item.image}
+                        className="productImg"
+                        onClick={() => this.addView(item)}
+                      />
                     </Link>
                   </Row>
                   <Row className="productHeading d-flex justify-content-center">
@@ -347,24 +385,26 @@ class Catalog extends Component {
                       {item.productName.slice(0, 25)}{" "}
                     </h>
                   </Row>
-                  <Row className="price d-flex justify-content-center mt-2">
-                    {parseFloat(item.productPrice).toFixed(2)} Лв.
-                  </Row>
+                 
                   <Row className="d-flex justify-content-center mt-2">
                     Brand: {item.manifacturedBy}
                   </Row>
                   <Row className="d-flex justify-content-center mt-2">
-                    Series: {item.category_collection}
+                    Series: {item.category_collection.slice(0,20)}
                   </Row>
-                  <Row className="basket d-flex justify-content-center mt-0.5">
-                    <GrBasket onClick={() => this.addToBasket(item)} />
+                  <Row className="price d-flex justify-content-center mt-2">
+                    {parseFloat(item.productPrice).toFixed(2)} Лв.
                   </Row>
+                  <Row className=" d-flex justify-content-left ">
+                    <ImEye className = "eye ml-2 mt-1 mr-2"/> <h className = "views">{item.views}</h>
+                  </Row>
+                  {item.views >= 5 ? (<FaHotjar className = "hot"/>) : ""}
                 </Container>
               </Col>
             </>
           ))}{" "}
         </Row>
-
+    
         <Modal show={this.state.show} className="modal">
           <Modal.Body className="modalBody">
             <Row className="headingModal d-flex justify-content-center">

@@ -52,8 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
           payload: products,
         });
         dispatch({
-          type: "FILTER_PRODUCTS",
-          payload: products,
+          type: "STOP_LOADING",
         });
       } else {
         console.log(res);
@@ -76,6 +75,7 @@ class MyNavbar extends Component {
   };
   changeSearch = (e) => {
     this.setState({ searchWord: e.currentTarget.value });
+    this.props.changeProducts(this.props.products.category,this.state.searchWord)
   };
   render() {
     return (

@@ -8,7 +8,10 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { AiFillStar } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
+import { BiEditAlt } from "react-icons/bi";
+import { AiFillCheckSquare } from "react-icons/ai";
 import { connect } from "react-redux";
+import { FaBullseye } from "react-icons/fa";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
@@ -30,8 +33,9 @@ const mapDispatchToProps = (dispatch) => ({
 var uniqid = require("uniqid");
 class ProductPage extends Component {
   state = {
+    loadingAddingToBasket: false,
     showComments: false,
-    comment: "",
+    edittingComment: false,
     addingComment: false,
     firstStar: "star1",
     secondStar: "star2",
@@ -40,6 +44,50 @@ class ProductPage extends Component {
     fifthStar: "star5",
     currentRate: 0,
     title: "",
+    comment: "",
+    commentToEditId: "",
+  };
+  cancleEdit = (id) => {
+    this.setState({ commentToEditId: "" });
+    this.setState({ edittingComment: false });
+    this.deleteRating()
+  };
+  editComment = (id) => {
+    this.setState({ commentToEditId: id });
+    this.setState({ edittingComment: true });
+  };
+  applyChangesComment = async (productId) => {
+    const url = process.env.REACT_APP_URL;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: { comment: this.state.comment, user: localStorage.getItem("user") },
+    };
+    const res = await fetch(
+      url +
+        "/product/editComment/" +
+        this.props.products.currentProduct._id +
+        "/" +
+        this.state.commentToEditId +
+        "/" +
+        this.state.comment +
+        "/" +
+        this.state.currentRate +
+        "/" +
+        this.state.title,
+
+      requestOptions
+    );
+    if (res.status === 200) {
+      this.updateProduct();
+      this.deleteRating();
+      this.setState({ edittingComment: false });
+      console.log(res);
+    } else {
+      console.log(res);
+    }
   };
   changeTitle = (e) => {
     this.setState({ title: e.currentTarget.value });
@@ -70,7 +118,7 @@ class ProductPage extends Component {
       delay: 0,
       smooth: "easeInOutQuart",
     });
-}
+  };
   deleteComment = async (id) => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
@@ -149,6 +197,7 @@ class ProductPage extends Component {
   changeComment = (e) => {
     this.setState({ comment: e.currentTarget.value });
   };
+
   scrollToSection = () => {
     scroller.scrollTo("commentSection", {
       duration: 800,
@@ -163,6 +212,7 @@ class ProductPage extends Component {
   };
   addToBasket = async (item) => {
     item.id = uniqid();
+    this.setState({ loadingAddingToBasket: true });
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "POST",
@@ -175,6 +225,7 @@ class ProductPage extends Component {
     const res = await axios(url + "/profile/addToBasket", requestOptions);
     if (res.status === 200) {
       console.log(res);
+      this.setState({ loadingAddingToBasket: false });
     } else {
       console.log(res);
     }
@@ -252,9 +303,8 @@ class ProductPage extends Component {
       this.setState({ showComments: false });
     } else {
       this.setState({ showComments: true });
-      this.scrollToSection()
+      this.scrollToSection();
     }
-  
   };
   componentDidMount = async () => {
     this.setState({ currentItem: this.props.currentProduct });
@@ -348,9 +398,19 @@ class ProductPage extends Component {
                   </Button>{" "}
                   <Button
                     variant="success"
-                    onClick={() => this.addToBasket(this.props.products.currentProduct)}
+                    onClick={() =>
+                      this.addToBasket(this.props.products.currentProduct)
+                    }
                   >
-                    <MdAddShoppingCart /> Add to cart
+                    {this.state.loadingAddingToBasket ? (
+                      <img
+                        src="https://i.gifer.com/ZZ5H.gif"
+                        className="loadComment"
+                      />
+                    ) : (
+                      <MdAddShoppingCart />
+                    )}
+                    Add to cart
                   </Button>
                 </Col>
               </Row>
@@ -372,34 +432,45 @@ class ProductPage extends Component {
             <Row>
               <strong>Rating</strong>{" "}
             </Row>
-            <Row className="mb-2">
-              <AiFillStar
-                className={this.state.firstStar}
-                onClick={() => this.setRate(1)}
-              />
-              <AiFillStar
-                className={this.state.secondStar}
-                onClick={() => this.setRate(2)}
-              />
-              <AiFillStar
-                className={this.state.thirdStar}
-                onClick={() => this.setRate(3)}
-              />
-              <AiFillStar
-                className={this.state.fourthStar}
-                onClick={() => this.setRate(4)}
-              />
-              <AiFillStar
-                className={this.state.fifthStar}
-                onClick={() => this.setRate(5)}
-              />
-              <TiDelete
-                className={
-                  this.state.showDeleteRating ? "ml-2 deleteRating" : "d-none"
-                }
-                onClick={() => this.deleteRating()}
-              />
-            </Row>
+            {this.state.edittingComment ? (
+              <Row className="mb-2 ">
+                <AiFillStar />
+                <AiFillStar />
+                <AiFillStar />
+                <AiFillStar />
+                <AiFillStar />
+              </Row>
+            ) : (
+              <Row className="mb-2 ">
+                <AiFillStar
+                  className={this.state.firstStar}
+                  onClick={() => this.setRate(1)}
+                />
+                <AiFillStar
+                  className={this.state.secondStar}
+                  onClick={() => this.setRate(2)}
+                />
+                <AiFillStar
+                  className={this.state.thirdStar}
+                  onClick={() => this.setRate(3)}
+                />
+                <AiFillStar
+                  className={this.state.fourthStar}
+                  onClick={() => this.setRate(4)}
+                />
+                <AiFillStar
+                  className={this.state.fifthStar}
+                  onClick={() => this.setRate(5)}
+                />
+                <TiDelete
+                  className={
+                    this.state.showDeleteRating ? "ml-2 deleteRating" : "d-none"
+                  }
+                  onClick={() => this.deleteRating()}
+                />
+              </Row>
+            )}
+
             <Row>
               <strong>Review Title</strong>{" "}
             </Row>
@@ -413,7 +484,7 @@ class ProductPage extends Component {
               <strong>Review </strong>{" "}
             </Row>
             <Row>
-              <input
+              <textarea
                 className="reviewInput"
                 onChange={(e) => this.changeComment(e)}
               />
@@ -437,92 +508,172 @@ class ProductPage extends Component {
           </div>
           {this.state.showComments &&
             this.props.products.currentProduct.comments.map((comment) => (
-                <>
-              <Row className="mainCommentRow mt-1">
-                  
-                <Row>
-                  <Col sm={4}>
-                    <p className="imageComment"> {comment.user[0]} </p>{" "}
-                  </Col>
-                  <Col sm={8} className = "col2">
-                    <Row className="ratingRow d-flex justify-content-left">
-                      {comment.rate === "1" ? (
-                        <>
-                          <AiFillStar className="star" /> <AiFillStar />{" "}
-                          <AiFillStar />
-                          <AiFillStar />
-                          <AiFillStar />{" "}
-                        </>
+              <>
+                <Row className="mainCommentRow mt-1">
+                  <Row>
+                    <Col sm={4}>
+                      <p className="imageComment"> {comment.user[0]} </p>{" "}
+                    </Col>
+                    <Col sm={8} className="col2">
+                      {this.state.commentToEditId === comment.id &&
+                      this.state.edittingComment ? (
+                        <Row className="ratingRow d-flex justify-content-left">
+                          <AiFillStar
+                            className={this.state.firstStar}
+                            onClick={() => this.setRate(1)}
+                          />
+                          <AiFillStar
+                            className={this.state.secondStar}
+                            onClick={() => this.setRate(2)}
+                          />
+                          <AiFillStar
+                            className={this.state.thirdStar}
+                            onClick={() => this.setRate(3)}
+                          />
+                          <AiFillStar
+                            className={this.state.fourthStar}
+                            onClick={() => this.setRate(4)}
+                          />
+                          <AiFillStar
+                            className={this.state.fifthStar}
+                            onClick={() => this.setRate(5)}
+                          />
+                        </Row>
                       ) : (
-                        ""
+                        <Row className="ratingRow d-flex justify-content-left">
+                          {comment.rate === "1" ? (
+                            <>
+                              <AiFillStar className="star" /> <AiFillStar />{" "}
+                              <AiFillStar />
+                              <AiFillStar />
+                              <AiFillStar />{" "}
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {comment.rate === "2" ? (
+                            <>
+                              {" "}
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />
+                              <AiFillStar />
+                              <AiFillStar />
+                              <AiFillStar />{" "}
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {comment.rate === "3" ? (
+                            <>
+                              {" "}
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" /> <AiFillStar />
+                              <AiFillStar />
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {comment.rate === "4" ? (
+                            <>
+                              {" "}
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" /> <AiFillStar />
+                            </>
+                          ) : (
+                            ""
+                          )}
+                          {comment.rate === "5" ? (
+                            <>
+                              {" "}
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />
+                              <AiFillStar className="star" />{" "}
+                              <AiFillStar className="star" />
+                            </>
+                          ) : (
+                            ""
+                          )}
+
+                          <h className="date"> {comment.date} </h>
+                          {comment.user === localStorage.getItem("user") ? (
+                            <RiDeleteBin6Fill
+                              className="deleteComment"
+                              onClick={() => this.deleteComment(comment.id)}
+                            />
+                          ) : (
+                            ""
+                          )}
+                          {comment.user === localStorage.getItem("user") ? (
+                            <BiEditAlt
+                              className="editComment"
+                              onClick={() => this.editComment(comment.id)}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </Row>
                       )}
-                      {comment.rate === "2" ? (
-                        <>
-                          {" "}
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />
-                          <AiFillStar />
-                          <AiFillStar />
-                          <AiFillStar />{" "}
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      {comment.rate === "3" ? (
-                        <>
-                          {" "}
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" /> <AiFillStar />
-                          <AiFillStar />
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      {comment.rate === "4" ? (
-                        <>
-                          {" "}
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" /> <AiFillStar />
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      {comment.rate === "5" ? (
-                        <>
-                          {" "}
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />
-                          <AiFillStar className="star" />{" "}
-                          <AiFillStar className="star" />
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      {comment.user === localStorage.getItem("user") ? (  <RiDeleteBin6Fill className = "deleteComment" onClick = {()=>this.deleteComment(comment.id)}/>) : ""}
-                  
-                    </Row>
-                   
-                    <Row className="">
-                      {" "}
-                      <p className="commentUser">
-                        <strong> {comment.user}</strong>{" "}
-                      </p>{" "}
-                    </Row>
-                  </Col>
+                      <Row>
+                        {" "}
+                        <p className="commentUser">
+                          <strong> {comment.user}</strong>{" "}
+                        </p>{" "}
+                      </Row>
+                    </Col>
+                  </Row>
                 </Row>
-               
-              </Row>
-               <Row className = "commentTitle">
-               <strong> {comment.title}</strong>
-             </Row>
-             <Row className = "commentText2 mb-4">
-              {comment.text}
-             </Row>
-             </>
+                <Row className="commentTitle">
+                  {this.state.commentToEditId === comment.id &&
+                  this.state.edittingComment ? (
+                    <>
+                      <textarea
+                        className="reviewTitleInputEdit mb-2"
+                        onChange={(e) => this.changeTitle(e)}
+                        defaultValue={comment.title}
+                      />
+                    </>
+                  ) : (
+                    <strong> {comment.title}</strong>
+                  )}
+                </Row>
+                {this.state.commentToEditId === comment.id &&
+                this.state.edittingComment ? (
+                  <>
+                    <textarea
+                      className="reviewInputEdit"
+                      onChange={(e) => this.changeComment(e)}
+                      defaultValue={comment.text}
+                    />
+                    <Row>
+                      <Col sm={6}>
+                        {" "}
+                        <button
+                          className="editCommentBtn"
+                          onClick={() => this.applyChangesComment()}
+                        >
+                          Edit comment{" "}
+                        </button>
+                      </Col>
+
+                      <Col sm={6}>
+                        {" "}
+                        <button
+                          className="cancleEdit"
+                          onClick={() => this.cancleEdit()}
+                        >
+                          Cancle edtting{" "}
+                        </button>
+                      </Col>
+                    </Row>
+                  </>
+                ) : (
+                  <Row className="commentText2 mb-4">{comment.text}</Row>
+                )}
+              </>
             ))}
         </Container>
       </>

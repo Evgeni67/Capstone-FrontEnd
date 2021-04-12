@@ -103,7 +103,6 @@ class Home extends Component {
             </Row>
           </Container>
         </Row>
-        <Container className = "homePageContainer mt-5"></Container>
       </>
     );
   }

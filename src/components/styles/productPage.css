@@ -4,11 +4,47 @@
 }
 
 .ratingRow{
-    width: 130px;
+    width: 220px;
 }
 .commentUser{
     margin-left: 3px;
     font-size: 14px;
+    font-size:15px !important;
+    margin-top: 5px !important;
+}
+.col2{
+    margin-left: -15px;
+}
+.editComment{
+    color:#9B870C;
+    margin-left: 10px;
+}
+.editCommentBtn{
+    width:100%;
+    margin: -15px;
+    border:1px solid lightgray;
+    background-color:darkgreen;
+    color:white;
+    font-size: 13.5px;
+    height:40px;
+    margin-top: 5px;
+}
+.cancleEdit{
+    width:100%;
+    margin: -15px;
+    border:1px solid lightgray;
+    background-color:darkred;
+    color:white;
+    font-size: 13.5px;
+    height:40px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.date{
+    font-size:13px !important;
+    margin-top:-2px;
+    margin-left: 10px !important;
+    color:gray
 }
 .commentText2{
     font-size: 13.5px;
@@ -20,6 +56,8 @@
 .mainCommentRow{
     border-top: 0.5px dashed lightgray;
     padding-top: 20px;
+    width: 100% !important;
+    margin-top: 20px;
 }
 .imageComment{
     background-color: #E9E9E9;
@@ -65,10 +103,25 @@ margin-top: -10px;
     height: 37px;
 
 }
+
+.changeDone{
+    font-size:35px;
+    color:green
+}
+.reviewTitleInputEdit{
+    width:300px;
+    border:1px solid lightgray;
+}
 .reviewInput{
     width: 100%;
     border:1px solid lightgray;
     height: 150px;
+}
+.reviewInputEdit{
+    width: 100%;
+    border:1px solid lightgray;
+    height: 120px;
+    margin-left: -15px;
 }
 .addCommentBtn{
     margin-top: 10px;
