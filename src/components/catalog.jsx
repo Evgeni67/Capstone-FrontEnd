@@ -371,7 +371,7 @@ class Catalog extends Component {
                 {this.state.loaded ? this.state.categories[0].category : "wait"}{" "}
               </h>{" "}
             </Row>
-            <Row className="sortRow">
+            <Row className="sortRow mt-4">
               <h5> Sort by </h5>
               <h5 className="ml-3 mr-2" onClick={() => this.filterByPriceAsc()}>
                 {" "}
@@ -424,12 +424,11 @@ class Catalog extends Component {
                           {item.productName.slice(0, 25)}{" "}
                         </h>
                       </Row>
-
                       <Row className="d-flex justify-content-center mt-2">
                         Brand: {item.manifacturedBy}
                       </Row>
                       <Row className="d-flex justify-content-center mt-2">
-                        Series: {item.category_collection.slice(0, 20)}
+                        Series: {item.category_collection.slice(0, 7)}
                       </Row>
                       <Row className="price d-flex justify-content-center mt-2">
                         {parseFloat(item.productPrice).toFixed(2)} Лв.

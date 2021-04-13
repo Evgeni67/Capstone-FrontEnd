@@ -4,7 +4,9 @@
     border:1px solid black;
     border-radius: 5px;
     background: white;
-    margin-bottom: 180px;
+    margin-bottom: 485px !important;
+    background: rgb(14,26,39);
+    background: linear-gradient(295deg, rgba(14,26,39,1) 0%, rgba(88,109,131,1) 57%);
 }
 .registrationRow{
     height:300px;
@@ -56,4 +58,8 @@
 }
 .registerToLogin{
     margin-top: 13px;
+}
+.registerQ{
+    color:whitesmoke;
+    margin-right: 0px;
 }

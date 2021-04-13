@@ -62,6 +62,7 @@ class Register extends Component {
   render() {
     return (
       <>
+       <img  className = "backgroundImage" src = "https://hoteldesigns.net/wp-content/uploads/2018/05/Bathroom1.jpg"/>
         <Row className="d-flex justify-content-center">
           <p className="regLogo">L.O.G.O. </p>
         </Row>
@@ -73,7 +74,7 @@ class Register extends Component {
                   className="emailRegister text-align-center"
                   type="text"
                   name="fname"
-                  defaultValue="name@email.com"
+                  placeholder="name@email.com"
                   onChange={(e) => this.changeEmail(e)}
                 />
               </Row>
@@ -83,7 +84,7 @@ class Register extends Component {
                   className="passwordRegister text-align-center "
                   type="password"
                   name="fname"
-                  defaultValue="password"
+                  placeholder="🔒*********🔒"
                   onChange={(e) => this.changePassword(e)}
                 />
               </Row>
@@ -91,7 +92,7 @@ class Register extends Component {
                 <input
                   className="confirmPassword text-align-center"
                   type="password"
-                  defaultValue="password"
+                  placeholder="🔒*********🔒"
                   onChange={(e) => this.changeConfirmPassword(e)}
                 />
               </Row>
@@ -108,16 +109,16 @@ class Register extends Component {
                 <input
                   className="mobileRegister text-align-center"
                   type="text"
-                  defaultValue="+359 . . . . . . . . ."
+                  placeholder="+359 . . . . . . . . ."
                   onChange={(e) => this.changePhone(e)}
                 />
               </Row>
 
               <Row className="d-flex justify-content-center">
-                <input
-                  className="addressRegister text-align-center"
+                <textarea
+                  className="addressRegister"
                   type="text"
-                  defaultValue="Address"
+                  placeholder="Address"
                   onChange={(e) => this.changeAddress(e)}
                 />
               </Row>
