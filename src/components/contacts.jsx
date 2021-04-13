@@ -51,8 +51,8 @@ class Contacts extends Component {
               <p className="mt-3">
                 <strong>Национален телефон</strong>
               </p>
-              <p className="address">тел: 0700 150 60</p>
-              <p className="address">моб: 0878 150 600</p>
+              <p className="address">тел: -</p>
+              <p className="address">моб: -</p>
               <p className="pricingCall">
                 /На цената на един градски разговор при обаждане от цялата
                 страна от стационарен телефон. При обаждане от мобилен телефон
