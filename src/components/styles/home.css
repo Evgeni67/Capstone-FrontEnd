@@ -59,11 +59,14 @@
   
   .bathroomImage2{
     width: 1000px;
+     /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
   }
   .homePageAdImg{
       opacity:0.5;
       border-radius:10px;
-      transition:ease-in-out 0.4s
+      transition:ease-in-out 0.4s;
+     
   }
   .homePageAdImg:hover{
     opacity:1;

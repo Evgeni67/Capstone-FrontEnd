@@ -18,6 +18,7 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
+    loggingIn:false,
   };
   changeEmail = (e) => {
     this.setState({ email: e.currentTarget.value });
@@ -26,6 +27,7 @@ class Login extends Component {
     this.setState({ password: e.target.value });
   };
   login = async () => {
+    this.setState({ loggingIn: true });
     const url = process.env.REACT_APP_URL;
     this.setState({ loading: true });
     const requestOptions = {
@@ -41,6 +43,7 @@ class Login extends Component {
       console.log(res);
       localStorage.setItem('accessToken', res.data.accessToken);
       localStorage.setItem('user', this.state.email);
+      this.setState({ loggingIn: false });
   localStorage.setItem('refreshToken', res.data.refreshToken);
       window.alert("logged");
       window.location = "/home"
@@ -51,17 +54,18 @@ class Login extends Component {
   render() {
     return (
       <>
-        <Container className="loginContainer">
+        <Container className="loginContainer shadow-lg">
+          <img  className = "backgroundImage" src = "https://hoteldesigns.net/wp-content/uploads/2018/05/Bathroom1.jpg"/>
           <Row className="logoRow d-flex justify-content-center mt-3">
             L.O.G.O.
           </Row>
           <Row className="d-flex justify-content-center">
             <input
-              className="emailLogin text-align-center"
+              className="emailLogin text-align-center shadow-lg"
               type="text"
               id="fname"
               name="fname"
-              defaultValue="name@email.com"
+              placeholder="Username"
               onChange={(e) => this.changeEmail(e)}
             />
           </Row>
@@ -72,12 +76,12 @@ class Login extends Component {
               type="password"
               id="fname"
               name="fname"
-              defaultValue="password"
+              placeholder="🔒*********🔒"
               onChange={(e) => this.changePassword(e)}
             />
           </Row>
           <Row className="loginBtnRow d-flex justify-content-center mt-3">
-            <button className="loginBtn" onClick = {() => this.login()}>Login </button>
+            <button className={this.state.loggingIn ? "loginBtnLoading" : "loginBtn"} onClick = {() => this.login()}>{this.state.loggingIn ? "" : "Login"} </button>
           </Row>
           <Row className="loginGoogleRow d-flex justify-content-center mt-3">
             <FcGoogle className="googleIcon" />{" "}

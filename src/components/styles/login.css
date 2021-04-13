@@ -1,85 +1,116 @@
-.loginContainer{
-    margin-top: 80px;
-    width:300px;
-    height:380px;
-    border:1px solid lightgray;
-    border-radius: 5px;
-    background-color:whitesmoke;
+.loginContainer {
+  margin-top: 180px;
+  height: 380px;
+  border-radius: 5px;
+  background: rgb(14,26,39);
+  background: linear-gradient(295deg, rgba(14,26,39,1) 0%, rgba(88,109,131,1) 57%);
+  width: 300px;
+  border: 1px solid black;
 }
-.loginRegisterContainer{
-    margin-top: 28px;
-    width:300px;
-    height:80px;
-    border:1px solid lightgray;
-    border-radius: 5px;
-    background-color:whitesmoke;
-  margin-bottom: 110px;
+.backgroundImage {
+  position: absolute;
+  z-index: -10;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 100px;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 }
-.logoRow{
-    font-size:25px;
+.loginRegisterContainer {
+  margin-top: 28px;
+  width: 300px;
+  height: 80px;
+  border: 1px solid ;
+  border-radius: 5px;
+  background: rgb(14,26,39);
+  background: linear-gradient(295deg, rgba(14,26,39,1) 0%, rgba(88,109,131,1) 57%);
+  margin-bottom: 255px;
+}
+.logoRow {
+  font-size: 25px;
+  font-weight: 500;
+  color: black;
+  padding-bottom: 20px;
+}
+.emailLogin {
+  -webkit-appearance: none !important;
+  margin-top: 30px;
+  border-color: lightgray !important;
+  width: 230px;
+  text-align: center;
+  border-radius: 5px;
+  height: 33.5px;
+}
+.passwordLogin {
+  -webkit-appearance: none !important;
+  margin-top: 20px;
+  border-color: lightgray !important;
+  width: 230px;
+  text-align: center;
+  border-radius: 5px;
+  height: 33.5px;
+  margin-bottom: 5px;
+
+}
+.loginBtnLoading {
+  width: 60px;
+  height:60px;
+  font-weight: 500;
+  border-radius: 50px;
+  background-image:url("https://i.pinimg.com/originals/48/91/0d/48910d73ef5c7ce6b9492c68a972e71d.png");
+  background-size: 53.5px 53.5px;
+  border-color:black;
+  border:3px solid black;
+  -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+.loginBtn {
+    letter-spacing: 1px;
+    width: 120px;
+    height:30px;
     font-weight: 500;
-    color:black;
-    border-bottom: lightgray 1px solid;
-    padding-bottom: 20px;
-}
-.emailLogin{
-    -webkit-appearance: none !important;
-    margin-top: 30px;
-    border-color:lightgray!important;
-    width:230px;
-    text-align: center;
-    color:gray;
-    color:gray;
     border-radius: 5px;
+    border-color:black;
+    border:1px solid black;
+    margin-bottom: 26px;
+  }
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); }}
+.loginGoogleRow {
+  margin-top: -5px !important;
 }
-.passwordLogin{
-    -webkit-appearance: none !important;
-    margin-top: 20px;
-    border-color:lightgray!important;
-    width:230px;
-    text-align: center;
-    color:gray;
-    border-radius: 5px;
+.loginBtnRow {
+  padding-bottom: 30px;
 }
-.loginBtn{
-    width:130px;
-    color:white;
-    font-weight: 500;
-    background-color: white;
-    border:1px solid white !important;
-    background-color: gray;
-    border-radius: 10px;
+.googleIcon {
+  font-size: 23px;
+  margin-right: 5px;
 }
-.loginGoogleRow{
-    margin-top: 23px !important;
+.forgottenPassText {
+  font-size: 14px;
+  color:whitesmoke;
 }
-.loginBtnRow{
-    border-bottom: 1px solid lightgray !important;
-    padding-bottom: 30px;
+.googleText {
+  font-weight: 500;
+  color:whitesmoke;
 }
-.googleIcon{
-    font-size: 23px;
-    margin-right: 5px;
+.loginRegisterText {
+  font-weight: 500;
+  margin-left: 5px;
+  
 }
-.forgottenPassText{
-    font-size:14px;
+.loginRegisterRow {
+  margin-top: 25px;
+  color:whitesmoke;
 }
-.googleText{
-    font-weight: 500;
+.registerQ {
+  font-size: 13.5px;
 }
-.loginRegisterText
-{
-font-weight: 500;
-margin-left: 5px;
-}
-.loginRegisterRow{
-margin-top: 25px;
-}
-.registerQ{
-    font-size:13.5px
-}
-.registerLogin{
-    font-size:13.5px;
-    font-weight: 500;
-    margin-left: 5px;
+.registerLogin {
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-left: 5px;
 }

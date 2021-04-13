@@ -4,17 +4,16 @@
   margin-top: 10px;
   width: 200px !important;
   height: 400px;
-  background: rgb(179, 179, 179);
-  background: linear-gradient(
-    180deg,
-    rgba(179, 179, 179, 1) 0%,
-    rgba(255, 255, 255, 1) 60%
-  );
   border-radius: 5px;
   transition: ease-in-out 0.4s;
 }
+
 .products {
   min-height: 800px;
+  background-color:white !important
+}
+.imageBackground{
+  margin-top: 263px;
 }
 .categoryNavbar {
   border: 1px solid lightgray;
@@ -26,11 +25,6 @@
   margin-top: 20px;
 }
 .categoryCol {
-  background: linear-gradient(
-    180deg,
-    rgba(211, 211, 211, 1) 0%,
-    rgba(255, 255, 255, 1) 76%
-  ) !important;
   margin-top: 60px;
   font-family: "Kiwi Maru", serif;
   border-top : 1px solid lightgray;
@@ -63,7 +57,9 @@
 }
 
 .heading {
-  font-size: 50px;
+  font-size: 60px;
+  letter-spacing:2px;
+  font-family: "Kiwi Maru", serif;
 }
 .productCol1:hover .basket {
   visibility: visible;
@@ -84,43 +80,31 @@
   padding-right: 25px !important;
   height:400px;
 }
-.dropdown{
-  background-color:none !important;
-border:none !important
-}
+
 .price {
   color: #323232;
   font-size: 25px;
   font-weight: 500;
   font-family: "Kiwi Maru", serif;
 }
-.lineRow {
-  height: 100px;
-  width: 100%;
-  margin-left: 0px;
-  margin-bottom: -200px;
+
+.aLotOfMargin{
+  margin-bottom: 700px !important;
 }
-.basket {
-  font-size: 0px;
-  transition: ease-in-out 0.4s;
-  font-weight: 500;
-  visibility: hidden;
-  color: gray;
-}
-.categoriesBtnRow {
-  margin-top: 140px;
-}
+
 .categoryBtn {
   margin-top: 30px;
-  border-radius: 22px 22px 0px 0px;
-  font-size: 21px;
-  width: 220px;
+  border-radius: 5px;
+  font-size: 23px;
+  width: 280px;
   height: 60px;
   border: none;
   border-bottom: none;
-  transition: ease-in-out 0.3s;
-  background-color: #d3d3d3;
+  transition: ease-in-out 0.4s;
+  background-color: #7F836D;
   margin-bottom: 20px !important;
+  color:white;
+  letter-spacing:2px
 }
 .modalImg{
   margin:auto;
@@ -142,9 +126,11 @@ border:none !important
   font-size: 19px;
 }
 .categoryBtn:hover {
+  background-color:white !important;
   height: 100px;
-  margin-top: 10px;
-  margin-bottom: -30px !important;
+  margin-bottom: -31px !important;
+  color:black !important;
+  font-size: 30px;
 }
 .headingModal {
   font-family: "Kiwi Maru", serif;
@@ -223,21 +209,7 @@ border:none !important
 }
 
 
-.addCommentBtn{
-  z-index: 10;
-  height:37px;
- margin-bottom: 5px;
- border-radius: 0px 10px 10px 0px;
- margin-left: -3px;
- transition: ease-in-out 0.2s
-}
-.addCommentBtn:active {
-  outline: none;
-  border: none;
-}
-.addCommentBtn:focus{
-  outline: 0;
-}
+
 .headingModal2 {
   font-size: 20px;
 }
@@ -258,7 +230,7 @@ border:none !important
 .sortRow{
   position: absolute;
   right:30px;
-  top:30px
+  top:110px
 }
 .searchIcon {
   margin-left: 30px;
@@ -267,6 +239,7 @@ border:none !important
 }
 .catalog1 {
   margin-top: -80px !important;
+  background-color:white !important
 }
 .inspectImg {
   width: 100%;
@@ -274,5 +247,4 @@ border:none !important
 .categoryNavbar {
   z-index: 10;
   width: 180px;
-  background-color: whitesmoke;
 }

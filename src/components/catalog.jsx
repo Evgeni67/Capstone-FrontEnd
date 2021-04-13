@@ -277,7 +277,7 @@ class Catalog extends Component {
       <>
         <Row
           className={
-            this.state.loading ? " d-flex justify-content-center" : "d-none"
+            this.state.loading ? "aLotOfMargin d-flex justify-content-center mb-5 mt-5" : "d-none"
           }
         >
           <img src="https://studio.code.org/v3/assets/hDNGCz0MfJ-xlRq6yeKqI69d0m9QDG8RRIM23pMHlBk/loading-bar-1.gif" />{" "}
@@ -286,7 +286,7 @@ class Catalog extends Component {
           className={
             this.state.loading
               ? "d-none"
-              : "categoriesBtnRow d-flex justify-content-center mt-5"
+              : " d-flex justify-content-center mb-5"
           }
         >
           <Col sm={2} className="d-flex justify-content-center">
@@ -337,9 +337,8 @@ class Catalog extends Component {
         </Row>
         <Row className={this.state.loading ? "d-none" : "catalog1"}>
           {" "}
-          <Row className="lineRow" />
-          <Col sm={12} className="categoryCol d-flex justify-content-center">
-            <Row className={this.state.loaded ? "show" : "d-none"}>
+          <Col sm={12} className=" d-flex justify-content-center mt-5">
+            <Row className={this.state.loaded ? "showIt" : "d-none"}>
               <h className=" heading mb-5 ">
                 {this.state.loaded ? this.state.categories[0].category : "wait"}{" "}
               
@@ -355,19 +354,21 @@ class Catalog extends Component {
           </Col>{" "}
         </Row>
 
+<Container className = "productsContaner mt-5">
+  <img className = "backgroundImage imageBackground"src = "https://png.pngtree.com/thumb_back/fw800/back_our/20190621/ourmid/pngtree-taobao-white-minimalist-cosmetics-background-image_192723.jpg"/>
         <Row
           className={
             this.state.loading
               ? "d-none"
-              : "products d-flex justify-content-center ml-1 mr-1"
+              : " d-flex justify-content-center ml-1 mr-1"
           }
         >
-          {this.props.products.products.map((item) => (
+          {this.props.products.products.slice(0,7).map((item) => (
             <>
               <Col
-                lg={2}
-                md={4}
-                s={6}
+                lg={3}
+                md={3}
+                s={12}
                 className="d-flex justify-content-center"
               >
                 <Container className="productContainer shadow-lg p-3 mb-5 bg-white rounded">
@@ -404,108 +405,8 @@ class Catalog extends Component {
             </>
           ))}{" "}
         </Row>
-    
-        <Modal show={this.state.show} className="modal">
-          <Modal.Body className="modalBody">
-            <Row className="headingModal d-flex justify-content-center">
-              {this.state.currentItem.productName}
-            </Row>
-            <Row className=" d-flex justify-content-center">
-              <img
-                className="modalImg shadow-lg p-3 mb-5 bg-white rounded"
-                src={this.state.imgToInspect}
-              />
-            </Row>
-            <Row
-              sm={12}
-              className="headingModal2 d-flex justify-content-center"
-            >
-              Описание
-            </Row>
-
-            <Row>
-              <Col
-                sm={12}
-                className="description text-center shadow-lg p-3 mb-5 bg-white rounded"
-              >
-                {this.state.currentItem.productDescription}{" "}
-              </Col>
-            </Row>
-
-            <Row className="seeReviews  d-flex justify-content-center ">
-              <p onClick={() => this.handleCommentSection()}>
-                {this.state.showComments ? "Hide Reviews" : "See Reviews"}{" "}
-              </p>{" "}
-            </Row>
-            <Container
-              className={
-                this.state.showComments ? "commentSection mb-5" : "d-none"
-              }
-            >
-              <p className="ml-1">
-                {this.state.showComments &&
-                this.state.currentItem.comments.length === 0
-                  ? "Be the first one to leave a Review"
-                  : ""}
-              </p>
-              {this.state.showComments &&
-                this.state.currentItem.comments.map((comment) => (
-                  <Row className="commentRow d-flex justify-content-left ml-1 ">
-                    <p className="mt-1 ml-2"> {comment.user} </p>{" "}
-                    <p className="commentText">{comment.text}</p>
-                    {comment.user === localStorage.getItem("user") ? (
-                      <RiDeleteBin6Fill
-                        className="deleteCommentBtn"
-                        onClick={() => this.deleteComment(comment.id)}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </Row>
-                ))}
-              <div className="textInput mb-1">
-                <input
-                  className="input"
-                  onChange={(e) => this.changeComment(e)}
-                />
-                <Button
-                  variant="secondary"
-                  className="addCommentBtn"
-                  onClick={() => this.addComment()}
-                >
-                  {this.state.addingComment ? (
-                    <img
-                      src="https://i.gifer.com/ZZ5H.gif"
-                      className="loadComment"
-                    />
-                  ) : (
-                    "Add"
-                  )}
-                </Button>
-              </div>
-            </Container>
-            <Row className="priceModal d-flex justify-content-center  ">
-              <p className="price2 ">
-                {" "}
-                Цена:{this.state.currentItem.productPrice} лв.{" "}
-              </p>
-            </Row>
-            <Button
-              variant="secondary"
-              onClick={() => this.setState({ show: false })}
-              className="closeBtn"
-            >
-              Close
-            </Button>
-            <Button
-              variant="success"
-              onClick={() => this.addToBasket(this.state.currentItem)}
-              className="buyBtn"
-            >
-              Buy
-            </Button>
-          </Modal.Body>
-        </Modal>
+        </Container>
+        
       </>
     );
   }
