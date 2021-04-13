@@ -91,7 +91,24 @@
 .aLotOfMargin{
   margin-bottom: 700px !important;
 }
-
+.pageNumberBtn{
+  background-color: #7F836D;
+  border-radius: 10px;
+  width:50px;
+  height:25px;
+ text-align: center;
+  color:white;
+  pointer-events: fill;
+}
+.clickedPage{
+  background-color: #434A28;
+  border-radius: 10px;
+  width:50px;
+  height:25px;
+ text-align: center;
+  color:white;
+  pointer-events: fill;
+}
 .categoryBtn {
   margin-top: 30px;
   border-radius: 5px;
