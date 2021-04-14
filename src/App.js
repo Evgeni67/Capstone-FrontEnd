@@ -18,9 +18,9 @@ import Login from "./components/login";
 import Register from "./components/register";
 import MyFooter from "./components/footer";
 import Catalog from "./components/catalog";
-import ShoppingCart from "./components/shoppingCart"
-import Contacts from "./components/contacts"
-import ProductPage from "./components/productPage"
+import ShoppingCart from "./components/shoppingCart";
+import Contacts from "./components/contacts";
+import ProductPage from "./components/productPage";
 class App extends Component {
   render() {
     return (
@@ -37,9 +37,9 @@ class App extends Component {
             <ProductPage />
           </Route>
           <Route path="/contacts">
-          <Contacts/>
+            <Contacts />
           </Route>
-          <Route path="/login">
+          <Route path="">
             <Login />
           </Route>
           <Route path="/register">
@@ -49,7 +49,7 @@ class App extends Component {
             <Catalog />
           </Route>
           <Route path="/shoppingCart">
-          <ShoppingCart/>
+            <ShoppingCart />
           </Route>
           <MyFooter />
         </Router>
