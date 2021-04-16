@@ -101,7 +101,9 @@ class MyNavbar extends Component {
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
+          <Link className="navText" to="/login">
             <h className="navText">Любими </h>
+            </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
             <Link className="navText" to="/shoppingCart">

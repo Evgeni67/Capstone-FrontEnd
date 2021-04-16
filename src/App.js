@@ -39,7 +39,9 @@ class App extends Component {
           <Route path="/contacts">
             <Contacts />
           </Route>
+          <Route path="/login">
             <Login />
+            </Route>
           <Route path="/register">
             <Register />
           </Route>
