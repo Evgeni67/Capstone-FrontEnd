@@ -142,7 +142,7 @@ class ProductPage extends Component {
 
   addComment = async () => {
     var date = new Date();
-    var month = date.getMonth();
+    var month = date.getMonth() +1;
     var day = date.getDate();
     if (month <= 9) {
       month = "0" + month;

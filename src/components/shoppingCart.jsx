@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Modal, Button, ButtonToolbar } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
 import "./styles/shoppingCart.css";
 import { TiDelete } from "react-icons/ti";
+import { AiFillCheckCircle } from "react-icons/ai";
+
 class ShoppingCart extends Component {
   state = {
     shoppingList: [],
     totalPrice: 0,
     loading: true,
   };
-  removeFromBasket = async (_id,productPrice) => {
+  removeFromBasket = async (_id, productPrice) => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "POST",
@@ -29,21 +31,36 @@ class ShoppingCart extends Component {
   };
   sendOrder = async () => {
     const url = process.env.REACT_APP_URL;
+    var date = new Date();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    if (month <= 9) {
+      month = "0" + month;
+    }
+    if (day <= 9) {
+      day = "0" + day;
+    }
+    var dateToSend = date.getFullYear() + "-" + month + "-" + day;
     const requestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
-      data:{ products: this.state.shoppingList,
+      data: {
+        products: this.state.shoppingList,
         address: "",
         phoneNumber: "",
-        status: "",}
+        status: "",
+        date:dateToSend
+      },
     };
+
     const res = await axios(url + "/order/addOrder", requestOptions);
-    console.log(res)
-    this.removeAllFromCart()
-  }
+    console.log(res);
+    this.removeAllFromCart();
+    this.setState({ showModal: true });
+  };
   removeAllFromCart = async () => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
@@ -51,13 +68,14 @@ class ShoppingCart extends Component {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
-      }
+      },
     };
     const res = await axios(url + "/profile/removeAllFromCart", requestOptions);
     this.setState({ shoppingList: [] });
-    this.setState({ totalPrice: 0 });
-    console.log(res)
-  }
+    var price = 0;
+    this.setState({ totalPrice: price.toFixed(2) });
+    console.log(res);
+  };
   componentDidMount = async () => {
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
@@ -71,9 +89,8 @@ class ShoppingCart extends Component {
       this.setState({ shoppingList: res.data.productsInTheBasket });
       var price = 0.0;
       res.data.productsInTheBasket.map(
-        (item) =>
-          (price += parseFloat(item.productPrice)
-      ))
+        (item) => (price += parseFloat(item.productPrice))
+      );
       price = price.toFixed(2);
       this.setState({ totalPrice: price });
       this.setState({ loading: false });
@@ -84,6 +101,34 @@ class ShoppingCart extends Component {
   render() {
     return (
       <>
+        <Modal
+          show={this.state.showModal}
+          onHide={() => this.setState({ showModal: false })}
+         
+        >
+          
+
+          <Modal.Body  className ="thankYouModal">
+          <Row className="d-flex justify-content-center">
+            {" "}
+            <AiFillCheckCircle className="orderSendIcon" />
+          </Row>
+          <Row className = "thankYouText">
+            Thank you for your purchase from [company name]. Please let us know
+            if we can do anything else to help!
+            </Row>
+            <Row className="d-flex justify-content-center mt-3">
+            <button
+              className="continueShoppingBtn"
+              onClick={() => this.setState({ showModal: false })}
+            >
+              Continue Shopping
+            </button>
+            </Row>
+          </Modal.Body>
+         
+        </Modal>
+
         <Row
           className={
             this.state.loading ? " d-flex justify-content-center" : "d-none"
@@ -91,7 +136,7 @@ class ShoppingCart extends Component {
         >
           <img src="https://studio.code.org/v3/assets/hDNGCz0MfJ-xlRq6yeKqI69d0m9QDG8RRIM23pMHlBk/loading-bar-1.gif" />{" "}
         </Row>
-        <Row className = "catalog">
+        <Row className="catalog">
           {this.state.shoppingList.map((item) => (
             <Container className="containerShopping">
               <Row>
@@ -100,7 +145,7 @@ class ShoppingCart extends Component {
                   <img src={item.image} className="productImg2" />{" "}
                 </Col>
 
-                <Col className = "infoCol"sm={4}>
+                <Col className="infoCol" sm={4}>
                   {" "}
                   <Row className="center">
                     <h className="itemHeading">{item.productName} </h>
@@ -109,7 +154,9 @@ class ShoppingCart extends Component {
                     <h className="">Описание </h>
                   </Row>
                   <Row className="center">
-                    <h className="  itemDescription">{item.productDescription} </h>
+                    <h className="  itemDescription">
+                      {item.productDescription}{" "}
+                    </h>
                   </Row>
                   <Row className="center d-flex justify-content-right price">
                     {" "}
@@ -125,9 +172,13 @@ class ShoppingCart extends Component {
                   </Row>
                 </Col>
                 <Col sm={1}>
-                <TiDelete
-                  onClick={() => this.removeFromBasket(item.id,item.productPrice)}/>
-                  </Col>
+                  <TiDelete
+                    className="tiDelete"
+                    onClick={() =>
+                      this.removeFromBasket(item.id, item.productPrice)
+                    }
+                  />
+                </Col>
               </Row>
             </Container>
           ))}{" "}
@@ -165,7 +216,9 @@ class ShoppingCart extends Component {
             Общо: <strong>{parseFloat(this.state.totalPrice) + 10}лв.</strong>
           </Row>
           <Row>
-            <button className="chekoutBtn" onClick = {() => this.sendOrder()}>Chekout </button>
+            <button className="chekoutBtn" onClick={() => this.sendOrder()}>
+              Chekout{" "}
+            </button>
           </Row>{" "}
         </Container>
         <Row className="checkoutRow d-flex justify-content-center mb-5 mt-5"></Row>
