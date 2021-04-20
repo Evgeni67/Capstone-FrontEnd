@@ -9,27 +9,6 @@ import "./styles/navbar.css";
 import axios from "axios";
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
-  addDataToGlobal: (description, location) =>
-    dispatch(async (dispatch, getState) => {
-      const url = process.env.REACT_APP_URL;
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      const res = await axios(
-        url + "/categoryForBathroom/zaBanq",
-        requestOptions
-      );
-      if (res.status === 200) {
-        console.log("Got 200 response");
-        dispatch({
-          type: "ADD_FETCHED_PRODUCTS",
-          payload: res.data.categories,
-        });
-      } else {
-        console.log(res);
-      }
-    }),
   changeProducts: (category,searchWord) => {
     dispatch(async (dispatch, getState) => {
       const url = process.env.REACT_APP_URL;
@@ -64,15 +43,16 @@ class MyNavbar extends Component {
   state = {
     showingCategories: false,
     searchWord: "",
+    shoppingList:[],
   };
-
-  showCategories = () => {
-    if (this.state.showingCategories === true) {
-      this.setState({ showingCategories: false });
-    } else {
-      this.setState({ showingCategories: true });
+  
+    showCategories = () => {
+      if (this.state.showingCategories === true) {
+        this.setState({ showingCategories: false });
+      } else {
+        this.setState({ showingCategories: true });
+      }
     }
-  };
   changeSearch = (e) => {
     this.setState({ searchWord: e.currentTarget.value });
     this.props.changeProducts(this.props.products.category,this.state.searchWord)
@@ -107,7 +87,7 @@ class MyNavbar extends Component {
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
             <Link className="navText" to="/shoppingCart">
-              <h className="navText">Кошница </h>
+              <h className="navText">Кошница({this.props.products.productsInCart.length}) </h>
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={3}>
@@ -123,6 +103,7 @@ class MyNavbar extends Component {
               name="fname"
               onChange={(e) => this.changeSearch(e)}
             />
+           <p className = "helloGreeting"> Hello, {localStorage.getItem(`user`)} </p>
           </Col>
         </Row>
       </>

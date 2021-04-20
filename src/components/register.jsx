@@ -52,6 +52,7 @@ class Register extends Component {
       const res = await axios(url + "/profile/register", requestOptions);
       if (res.status === 200) {
         window.alert("registered");
+        window.location = "/login"
       } else {
         console.log(res);
       }

@@ -5,6 +5,41 @@ import axios from "axios";
 import "./styles/shoppingCart.css";
 import { TiDelete } from "react-icons/ti";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { connect } from "react-redux";
+import { FaBullseye } from "react-icons/fa";
+
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  changeProduct: (product) =>
+    dispatch(async (dispatch, getState) => {
+      dispatch({
+        type: "CHANGE_CURRENT_PRODUCT",
+        payload: product,
+      });
+    }),
+  changeProducts: (products) =>
+    dispatch(async (dispatch, getState) => {
+      dispatch({
+        type: "FILTER_PRODUCTS",
+        payload: products,
+      });
+    }),
+    addProductToCart: (product) => 
+      dispatch(async (dispatch, getState) => {
+        dispatch({
+          type: "ADD_PRODUCT_TO_CART",
+          payload: product,
+        });
+      }),
+    removeProductFromCart: (product) => 
+      dispatch(async (dispatch, getState) => {
+        dispatch({
+          type: "REMOVE_PRODUCT_FROM_CART",
+          payload: product,
+        });
+      }),
+   
+});
 
 class ShoppingCart extends Component {
   state = {
@@ -13,6 +48,9 @@ class ShoppingCart extends Component {
     loading: true,
   };
   removeFromBasket = async (_id, productPrice) => {
+    let product = {}
+    product.id = _id
+    this.props.removeProductFromCart(product)
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "POST",
@@ -62,6 +100,7 @@ class ShoppingCart extends Component {
     this.setState({ showModal: true });
   };
   removeAllFromCart = async () => {
+    this.props.products.productsInCart.forEach(product => {this.props.removeProductFromCart(product)})
     const url = process.env.REACT_APP_URL;
     const requestOptions = {
       method: "POST",
@@ -226,5 +265,4 @@ class ShoppingCart extends Component {
     );
   }
 }
-
-export default ShoppingCart;
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

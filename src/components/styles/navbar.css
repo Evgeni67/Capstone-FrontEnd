@@ -14,7 +14,10 @@
   margin-bottom: -100px;
 
 }
-
+.helloGreeting{
+  margin-top: 37px;
+  margin-left: 35px;
+}
 .searchForm {
   height: 30px !important;;
   margin-top: 35px !important;;

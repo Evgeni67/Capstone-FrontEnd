@@ -11,6 +11,7 @@ export const initialState = {
     products:[],
     currentCategory:"",
     currentProduct:{},
+    productsInCart:[],
   },
   load: {
     loading: false,

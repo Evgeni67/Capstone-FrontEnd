@@ -29,6 +29,14 @@ const mapDispatchToProps = (dispatch) => ({
         payload: products,
       });
     }),
+    addProductToCart: (product) => 
+      dispatch(async (dispatch, getState) => {
+        dispatch({
+          type: "ADD_PRODUCT_TO_CART",
+          payload: product,
+        });
+      }),
+    
 });
 var uniqid = require("uniqid");
 class ProductPage extends Component {
@@ -211,6 +219,7 @@ class ProductPage extends Component {
     }
   };
   addToBasket = async (item) => {
+    this.props.addProductToCart(item)
     item.id = uniqid();
     this.setState({ loadingAddingToBasket: true });
     const url = process.env.REACT_APP_URL;
