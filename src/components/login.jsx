@@ -23,6 +23,9 @@ class Login extends Component {
   changeEmail = (e) => {
     this.setState({ email: e.currentTarget.value });
   };
+  componentDidMount = () => {
+    localStorage.setItem("user", "Guest")
+  }
   changePassword = (e) => {
     this.setState({ password: e.target.value });
   };
@@ -45,7 +48,6 @@ class Login extends Component {
       localStorage.setItem('user', this.state.email);
       this.setState({ loggingIn: false });
   localStorage.setItem('refreshToken', res.data.refreshToken);
-      window.alert("logged");
       window.location = "/home"
     } else {
       console.log(res);

@@ -25,6 +25,9 @@ class App extends Component {
   render() {
     return (
       <>
+      {/* alert */}
+      {/* delete console */}
+        {/* mention web scrapping */}
         {" "}
         <Router>
           <MyNavbar />
