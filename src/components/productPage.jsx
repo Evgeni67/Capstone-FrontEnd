@@ -435,7 +435,7 @@ class ProductPage extends Component {
         </Container>
 
         <Container
-          className={this.state.showComments ? "commentSection" : "d-none"}
+          className={this.state.showComments ? "commentSection " : "d-none"}
         >
           <p className="ml-1">
             {this.state.showComments &&
@@ -681,7 +681,7 @@ class ProductPage extends Component {
                           className="cancleEdit"
                           onClick={() => this.cancleEdit()}
                         >
-                          Cancle edtting{" "}
+                          Cancel edtting{" "}
                         </button>
                       </Col>
                     </Row>

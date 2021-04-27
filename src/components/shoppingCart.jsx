@@ -256,7 +256,7 @@ class ShoppingCart extends Component {
           </Row>
           <Row>
             <button className="chekoutBtn" onClick={() => this.sendOrder()}>
-              Chekout{" "}
+            Checkout{" "}
             </button>
           </Row>{" "}
         </Container>

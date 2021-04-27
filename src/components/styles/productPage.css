@@ -135,7 +135,7 @@ margin-top: -10px;
     margin-bottom: 10px;
 }
 .commentSection{
-    margin-top: -180px;
+    margin-top: -50px !important;
 }
 .star{
     color:gold
