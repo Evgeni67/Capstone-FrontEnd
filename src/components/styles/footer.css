@@ -67,6 +67,12 @@
     margin-top: 40px;
     margin-left: 5px;
   }
+  .emailSubscriptionInput{
+    border:none !important
+  }
+  .subscribeBtn{
+    border:none !important
+  }
   .borderCol {
     border: none;
     height: 0px;

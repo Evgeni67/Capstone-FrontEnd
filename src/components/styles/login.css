@@ -17,6 +17,14 @@
   filter: blur(8px);
   -webkit-filter: blur(8px);
 }
+@media screen and (max-width: 765px) {
+  .backgroundImage{
+    display: none;
+  }
+ 
+.loginContainer{margin-top:0px;}
+.loginRegisterContainer{margin-bottom: 0px !important;}
+}
 .loginRegisterContainer {
   margin-top: 28px;
   width: 300px;

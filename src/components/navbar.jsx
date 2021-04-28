@@ -63,31 +63,31 @@ class MyNavbar extends Component {
         {" "}
         <Row className = "navBody">
           <Col className="d-flex justify-content-center" sm={4} xs={12}>
-            <h className="logoText">L.O.G.O. </h>
+            <p className="logoText">L.O.G.O. </p>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
           <Link className="navText" to="/home">
-            <h className="navText">Начало </h>
+            <p className="navText">Начало </p>
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
           <Link className="navText" to="/contacts">
-            <h className="navText"> Контакти</h>
+            <p className="navText"> Контакти</p>
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
             <Link className="navText" to="/catalog">
-              <h className="navText">Каталог </h>
+              <p className="navText">Каталог </p>
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
           <Link className="navText" to="/login">
-            <h className="navText">Любими </h>
+            <p className="navText">{localStorage.getItem("user") === "Guest" ? "Влезте" : "Излезте"} </p>
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={1} xs={12}>
             <Link className="navText" to="/shoppingCart">
-              <h className="navText">Кошница({this.props.products.productsInCart.length}) </h>
+              <p className="navText">Кошница({this.props.products.productsInCart.length}) </p>
             </Link>
           </Col>
           <Col className="d-flex justify-content-center" sm={3}>
@@ -97,7 +97,7 @@ class MyNavbar extends Component {
             />
             <input
               className="searchForm"
-              autocomplete="off"
+              autoComplete="off"
               type="text"
               id="fname"
               name="fname"

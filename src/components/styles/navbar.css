@@ -9,11 +9,11 @@
 .navText {
   letter-spacing: 1.35px;
   color: gray;
-  margin-top: 35px !important;
+  margin-top:17px !important;
   font-size: 22px;
-  margin-bottom: -100px;
-
+  margin-bottom: -100px;margin-right:25px;
 }
+
 .helloGreeting{
   margin-top: 37px;
   margin-left: 35px;
@@ -28,7 +28,20 @@
   transition: ease-in-out 0.3s;
   display:none;
 }
-
+@media screen and (max-width: 765px) {
+  .searchForm{
+    display: none
+  }
+  .navText{
+    display: none
+  }
+  .logoText{
+    display: none
+  }
+  .helloGreeting{
+    display: none;
+  }
+}
 .categoryNavbar {
   position: absolute;
   z-index: 10;
